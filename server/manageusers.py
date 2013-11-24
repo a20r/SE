@@ -14,8 +14,8 @@ USERNAME = 'admin'
 PASSWORD = 'default'
 
 # create our little application :)
-app = Flask(__name__)
-app.config.from_object(__name__)
+#app = Flask(__name__)
+#app.config.from_object(__name__)
 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -105,11 +105,5 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
-
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        app.run(host='localhost', port=8080)
-    elif len(sys.argv) == 3:
-        app.run(host=sys.argv[1], port=int(sys.argv[2]))
 
 
