@@ -23,6 +23,7 @@ def login():
         )
 
         resp.set_cookie(db.AUTH_COOKIE, "")
+        return resp
     else:
         if userData["password"] == request.form["password"]:
             token = str(uuid.uuid1())
