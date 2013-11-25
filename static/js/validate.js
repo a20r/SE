@@ -29,30 +29,6 @@ function validateEmail(){
 		element.setCustomValidity("");
 }
 
-// Ckeck if username exists for registration
-function validateUsername(){
-	"use strict";
-	var element = document.getElementById("user");
-	//TODO: send to server and check if username exists
-	var url = "/username";
-	xmlhttp.open("POST", url);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("username="+username);
-	var response;
-	xmlhttp.onreadystatechange = function() {
-  		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-    		response = xmlhttp.responseText;
-    	}
-  	};
-  	// TODO
-	var exists = false;
-	if (exists)
-		element.setCustomValidity("Username already exists");
-	else {
-		element.setCustomValidity("");
-	}
-}
-
 // Register
 function sendForm(){
 	"use strict";
@@ -60,16 +36,18 @@ function sendForm(){
 	var username = document.getElementById("user").value;
 	var password = document.getElementById("password1").value;
 	var email = document.getElementById("email").value;
-	//TODO: send to the server
-	// $.ajax({
-	// 	type: "POST";
-	// 	data: {
-	// 		"username": username,
-	// 		"password": password,
-	// 		"email": email
-	// 	},
-	// 	url: "/register"
-	// })
+	$.ajax({ 
+		type:"POST", url: "/register", 
+		data: { "username": username, "password": password, "email": email}, 
+		success: function(obj) { 
+			if (obj.error === 0)
+				window.location.replace("/main_page.html");
+			else if (obj.error === 1){
+				$("#alert_html").html(" Username already exists!")
+				$("#alert_msg").css("display", "block");
+			}			
+		} })
+
 }
 
 //Login

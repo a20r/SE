@@ -16,21 +16,25 @@
     <div class="container">
         <form class="form-register" id="form" role="form">
             <h2 class="form-signin-heading">Enter your details</h2>
+             <div id="alert_msg" class="alert alert-danger" style="display: none;">
+                <button type="button" class="close" onClick="warning_closed()" data-dismiss="alert">&times;</button>
+                <strong>Error!</strong><span id="alert_html"></span>
+             </div>
             <div class="input-group margin-bottom-sm">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                <input class="form-control" type="text" placeholder="Username" required>
+                <input class="form-control" type="text" id="user" placeholder="Username" required>
             </div>
             <div class="input-group margin-bottom-sm">
                 <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                <input class="form-control" type="text" placeholder="Email address" required>
+                <input class="form-control" type="email" id="email" placeholder="Email address" validateEmail() required>
             </div>
             <div class="input-group margin-bottom-sm">
                 <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                <input class="form-control" type="password" placeholder="Password" required>
+                <input class="form-control" type="password" id="password1" placeholder="Password" onchange="validatePassword()" required>
             </div>
             <div class="input-group margin-bottom-sm">
                 <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                <input class="form-control" type="password" placeholder="Repeat Password" required>
+                <input class="form-control" type="password" id="password2" placeholder="Repeat Password" onchange="validatePassword()" required>
             </div>
             <button class="btn btn-lg btn-info btn-block" type="submit">Create account</button>
         </form>
