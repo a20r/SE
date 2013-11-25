@@ -1,7 +1,7 @@
 
 import rethinkdb as r
 
-HOST = "localhost"
+HOST = "bowtie.mobi"
 PORT = 28015
 DB = "finance"
 TABLE = "cache"
