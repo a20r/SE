@@ -7,6 +7,10 @@ DB = "finance"
 TABLE = "cache"
 PRIMARY_KEY = "index"
 
+# Shouldn't really be here but this is where my global vars live
+# Shows the database update interval in milliseconds
+UPDATE_INTERVAL = 5 * 60000
+
 def init():
     conn = r.connect()
     if not DB in r.db_list().run(conn):
