@@ -65,7 +65,8 @@ def register():
             "username": request.form["username"],
             "password": request.form["password"],
             "email": request.form["email"],
-            "token": token
+            "token": token,
+            "stocks_following": list()
         }).run(db.CONN)
 
         resp = make_response(
