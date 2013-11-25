@@ -14,6 +14,12 @@ def followStock():
 
     if len(userDataList) > 0:
         stockName = request.form["stock_name"]
+        if not stockName in db.STOCK_MAP.keys():
+            return jsonify(
+                error = 1,
+                message = "Cannot follow an imaginary stock"
+            )
+
         userData = userDataList[0]
         if not stockName in userData[db.STOCKS_FOLLOWING_KEY]:
             userData[db.STOCKS_FOLLOWING_KEY].append(stockName)

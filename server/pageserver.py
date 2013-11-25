@@ -8,7 +8,9 @@ STATIC_DIR = "static/"
 MIME_DICT = {
     "js": "text/javascript",
     "css": "text/css",
-    "img": "image/png"
+    "img": "image/png",
+    "libraries": "text/javascript",
+    "data": "text/csv"
 }
 
 @app.route("/<filename>", methods = ["GET"])
