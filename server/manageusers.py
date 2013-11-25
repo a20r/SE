@@ -92,8 +92,28 @@ def register():
         resp.set_cookie(COOKIE_NAME, "")
         return resp
 
-@app.route('/logout')
+@app.route('/logout', methods = ["POST"])
 def logout():
-    pass
+    userData = r.table(db.USER_TABLE).get_all(
+        request.cookies.get(COOKIE_NAME),
+        index = "token"
+    ).run(db.CONN)
 
+    if len(userData) == 0:
+        return jsonify(
+            error = 1,
+            message = "User with associated token is not logged in",
+            token = None
+        )
+    else:
+        resp = make_response(
+            jsonify(
+                error = 0,
+                message = "User logged off",
+                token = None
+            )
+        )
+
+        resp.set_cookie(COOKIE_NAME, "")
+        return resp
 
