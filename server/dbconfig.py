@@ -14,6 +14,10 @@ USER_SECONDARY_KEY = "token"
 # Shows the database update interval in seconds
 UPDATE_INTERVAL = 5 * 60
 
+AUTH_COOKIE = "stock_auth_token"
+
+STOCKS_FOLLOWING_KEY = "stocks_following"
+
 def init():
     conn = r.connect()
     if not DB in r.db_list().run(conn):

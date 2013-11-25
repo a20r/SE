@@ -19,6 +19,7 @@ def getTime(toConvert = None):
 
 @app.route("/get_stock/<stockName>/<infoType>", methods = ["GET"])
 def getRealtimeStock(stockName, infoType):
+    stockName = stockName.upper()
     stock = yf.StockInfo(stockName)
     cachedData = r.table(db.CACHE_TABLE).get(stockName).run(db.CONN)
     infoDict = dict()
@@ -38,19 +39,22 @@ def getRealtimeStock(stockName, infoType):
             infoDict = stock.all()
             infoDict["index"] = stockName
             infoDict["timestamp"] = getTime()
-            r.table(db.CACHE_TABLE).get(stockName).update(infoDict).run(db.CONN)
+            r.table(db.CACHE_TABLE).get(stockName).update(
+                infoDict
+            ).run(db.CONN)
         else:
             print "\n-- DB == Using Cached Data ==\n"
             infoDict = cachedData
 
     del infoDict["timestamp"]
     if infoType == "all":
-        return json.dumps({infoType: infoDict})
+        return json.dumps(infoDict)
     else:
         return json.dumps({infoType: infoDict[infoType]})
 
 @app.route("/get_stock_direct/<stockName>/<infoType>", methods = ["GET"])
 def getStockDirect(stockName, infoType):
+    stockName = stockName.upper()
     stock = yf.StockInfo(stockName)
     data = getattr(stock, infoType, None)()
     return json.dumps({infoType: data})

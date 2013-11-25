@@ -1,13 +1,11 @@
 
 from contextlib import closing
-from flask import Flask, request, session, g, redirect, url_for
+from flask import request, session, g, redirect, url_for
 from flask import abort, render_template, flash, jsonify, make_response
 import rethinkdb as r
 import dbconfig as db
 import uuid
 from app import app
-
-COOKIE_NAME = "stock_auth_token"
 
 @app.route('/login', methods=["POST"])
 def login():
@@ -24,7 +22,7 @@ def login():
             )
         )
 
-        resp.set_cookie(COOKIE_NAME, "")
+        resp.set_cookie(db.AUTH_COOKIE, "")
     else:
         if userData["password"] == request.form["password"]:
             token = str(uuid.uuid1())
@@ -41,7 +39,7 @@ def login():
                 )
             )
 
-            resp.set_cookie(COOKIE_NAME, token)
+            resp.set_cookie(db.AUTH_COOKIE, token)
             return resp
         else:
             resp = make_response(
@@ -52,7 +50,7 @@ def login():
                 )
             )
 
-            resp.set_cookie(COOKIE_NAME, "")
+            resp.set_cookie(db.AUTH_COOKIE, "")
             return resp
 
 @app.route('/register', methods=["POST"])
@@ -78,7 +76,7 @@ def register():
             )
         )
 
-        resp.set_cookie(COOKIE_NAME, token)
+        resp.set_cookie(db.AUTH_COOKIE, token)
         return resp
     else:
         resp = make_response(
@@ -89,14 +87,14 @@ def register():
             )
         )
 
-        resp.set_cookie(COOKIE_NAME, "")
+        resp.set_cookie(db.AUTH_COOKIE, "")
         return resp
 
 @app.route('/logout', methods = ["POST"])
 def logout():
     userData = r.table(db.USER_TABLE).get_all(
-        request.cookies.get(COOKIE_NAME),
-        index = "token"
+        request.cookies.get(db.AUTH_COOKIE),
+        index = db.USER_SECONDARY_KEY
     ).run(db.CONN)
 
     if len(userData) == 0:
@@ -114,6 +112,6 @@ def logout():
             )
         )
 
-        resp.set_cookie(COOKIE_NAME, "")
+        resp.set_cookie(db.AUTH_COOKIE, "")
         return resp
 
