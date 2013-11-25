@@ -32,7 +32,6 @@ function validateEmail(){
 // Register
 function sendForm(){
 	"use strict";
-	var url = "/register"; //where to send data
 	var username = document.getElementById("user").value;
 	var password = document.getElementById("password1").value;
 	var email = document.getElementById("email").value;
@@ -43,16 +42,28 @@ function sendForm(){
 			if (obj.error === 0)
 				window.location.replace("/main_page.html");
 			else if (obj.error === 1){
-				$("#alert_html").html(" Username already exists!")
+				$("#alert_html").html(obj.message)
 				$("#alert_msg").css("display", "block");
 			}			
-		} })
-
+		} });
 }
 
 //Login
-function checkUsernamePassword(){
-
+function login(){
+	"use strict";
+	var password = document.getElementById("password").value;
+	var username = document.getElementById("username").value;
+	$.ajax({ 
+		type:"POST", url: "/login", 
+		data: { "username": username, "password": password }, 
+		success: function(obj) { 
+			if (obj.error === 0)
+				window.location.replace("/main_page.html");
+			else if (obj.error === 1){
+				$("#alert_html").html(obj.message);
+				$("#alert_msg").css("display", "block");
+			}
+		} });
 }
 
 // change default submit for registration form
@@ -60,5 +71,9 @@ $(document).ready(function(){
     $( "#form" ).submit(function( event ) {
 		event.preventDefault();
 		sendForm();
+	});
+	$( "#login" ).submit(function( event ) {
+		event.preventDefault();
+		login();
 	});
 });

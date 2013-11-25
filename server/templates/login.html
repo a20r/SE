@@ -4,34 +4,42 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
-  <script src="validate.js"></script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="/js/validate.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/login.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/login.css" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <form class="form-signin" action="/login" method="post">
+    <form class="form-signin" id="login">
       <div class="well">
         <h2 class="form-signin-heading">Sign in</h2>
         <!-- <p id="error"></p> -->
         <label for="username">Username</label>
-        <input class="form-control" type="text" name="username" required autofocus>
+        <input class="form-control" type="text" id="username" required autofocus>
         <label for="password">Password</label>
-        <input class="form-control" type="password" name="password" required>
+        <input class="form-control" type="password" id="password" required>
+        <div id="alert_msg" class="alert alert-danger" style="display: none;">
+            <button type="button" class="close" onClick="warning_closed()" data-dismiss="alert">&times;</button>
+            <strong>Error! </strong><span id="alert_html"></span>
+        </div>
         <div class="row">
           <div class="col-xs-6">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+          </div>
+          <div class="col-xs-6">
+            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href='/registration.html'">Register</button>
           </div>
         </div>
         <!-- <a href="registration.html" class="btn btn-lg btn-info btn-block" type="submit">Create new account</a> -->
       </div>
     </form>
-  </div>
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery.js"></script>
+  </div>  
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
