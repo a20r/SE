@@ -5,6 +5,7 @@ from flask import abort, render_template, flash, jsonify
 import rethinkdb as r
 import dbconfig as db
 import uuid
+from app import app
 
 @app.route('/show_entries')
 def show_entries():
@@ -67,13 +68,13 @@ def register():
         return jsonify(
             error = 0,
             message = "No error",
-            token = None
+            token = token
         )
     else:
         return jsonify(
             error = 1,
-            message = "User already exists"
-            token = token
+            message = "User already exists",
+            token = None
         )
 
 @app.route('/logout')
