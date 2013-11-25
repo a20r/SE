@@ -7,8 +7,7 @@ STATIC_DIR = "static/"
 
 @app.route("/<filename>", methods = ["GET"])
 def serveHtmlPage(filename):
-    with open(STATIC_DIR + "html/" + filename) as f:
-        return f.read()
+    render_template(filename)
 
 @app.route("/<filetype>/<filename>", methods = ["GET"])
 def serveScript(filetype, filename):

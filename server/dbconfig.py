@@ -8,6 +8,7 @@ CACHE_TABLE = "cache"
 USER_TABLE = "users"
 CACHE_PRIMARY_KEY = "index"
 USER_PRIMARY_KEY = "username"
+USER_SECONDARY_KEY = "token"
 
 # Shouldn't really be here but this is where my global vars live
 # Shows the database update interval in seconds
@@ -34,7 +35,12 @@ def create(conn):
         USER_TABLE,
         primary_key = USER_PRIMARY_KEY
     ).run(conn)
+    r.db(DB).table(USER_TABLE).index_create(
+        USER_SECONDARY_KEY
+    ).run(conn)
 
+# because python is stupid
+CONN = init()
 
 """ Test Functions """
 

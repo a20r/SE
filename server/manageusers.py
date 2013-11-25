@@ -1,7 +1,10 @@
 
 from contextlib import closing
 from flask import Flask, request, session, g, redirect, url_for
-from flask import abort, render_template, flash
+from flask import abort, render_template, flash, jsonify
+import rethinkdb as r
+import dbconfig as db
+import uuid
 
 @app.route('/show_entries')
 def show_entries():
@@ -46,20 +49,32 @@ def login():
             return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=["POST"])
 def register():
-    error = None
-    if request.method == 'POST':
-        g.db.execute(
-            'insert into entries (name, email, password) values (?, ?, ?)',
-            [
-                request.form['name'],
-                request.form['email'],
-                request.form['password']
-            ]
+    userData = r.table(db.USER_TABLE).get(
+        request.form["username"]
+    ).run(db.CONN)
+
+    if userData == None:
+        token = str(uuid.uuid1())
+        r.table(db.USER_TABLE).insert({
+            "username": request.form["username"],
+            "password": request.form["password"],
+            "email": request.form["email"],
+            "token": token
+        }).run(db.CONN)
+
+        return jsonify(
+            error = 0,
+            message = "No error",
+            token = None
         )
-        return redirect(url_for('login'))
-    return render_template('register.html', error=error)
+    else:
+        return jsonify(
+            error = 1,
+            message = "User already exists"
+            token = token
+        )
 
 @app.route('/logout')
 def logout():

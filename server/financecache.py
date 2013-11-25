@@ -7,8 +7,6 @@ import json
 from app import app
 import datetime, time
 
-conn = db.init()
-
 def getTime(toConvert = None):
     if toConvert == None:
         return time.mktime(
@@ -22,14 +20,14 @@ def getTime(toConvert = None):
 @app.route("/get_stock/<stockName>/<infoType>", methods = ["GET"])
 def getRealtimeStock(stockName, infoType):
     stock = yf.StockInfo(stockName)
-    cachedData = r.table(db.TABLE).get(stockName).run(conn)
+    cachedData = r.table(db.CACHE_TABLE).get(stockName).run(db.CONN)
     infoDict = dict()
     if cachedData == None:
         print "\n-- DB == Inserting New Information ==\n"
         infoDict = stock.all()
         infoDict["index"] = stockName
         infoDict["timestamp"] = getTime()
-        r.table(db.TABLE).insert(infoDict).run(conn)
+        r.table(db.CACHE_TABLE).insert(infoDict).run(db.CONN)
     else:
         elapsedTime = (
             getTime() -
@@ -40,7 +38,7 @@ def getRealtimeStock(stockName, infoType):
             infoDict = stock.all()
             infoDict["index"] = stockName
             infoDict["timestamp"] = getTime()
-            r.table(db.TABLE).get(stockName).update(infoDict).run(conn)
+            r.table(db.CACHE_TABLE).get(stockName).update(infoDict).run(db.CONN)
         else:
             print "\n-- DB == Using Cached Data ==\n"
             infoDict = cachedData
