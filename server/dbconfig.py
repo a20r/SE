@@ -8,8 +8,8 @@ TABLE = "cache"
 PRIMARY_KEY = "index"
 
 # Shouldn't really be here but this is where my global vars live
-# Shows the database update interval in milliseconds
-UPDATE_INTERVAL = 5 * 60000
+# Shows the database update interval in seconds
+UPDATE_INTERVAL = 5 * 60
 
 def init():
     conn = r.connect()

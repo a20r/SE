@@ -1,6 +1,10 @@
 
 import server
+import sys
 
 if __name__ == "__main__":
-    server.run()
+    if len(sys.argv) == 1:
+        server.run("localhost", 8000)
+    else:
+        server.run(sys.argv[1], sys.argv[2])
 

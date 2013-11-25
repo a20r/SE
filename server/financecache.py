@@ -1,5 +1,5 @@
 
-from flask import Flask, request, redirect, url_for, abort, jsonify
+from flask import request, redirect, url_for, abort, jsonify
 import rethinkdb as r
 import dbconfig as db
 import yahoofin as yf
