@@ -20,7 +20,7 @@ def getTime(toConvert = None):
         )
 
 @app.route("/get_stock/<stockName>/<infoType>", methods = ["GET"])
-def getStock(stockName, infoType):
+def getRealtimeStock(stockName, infoType):
     stock = yf.StockInfo(stockName)
     cachedData = r.table(db.TABLE).get(stockName).run(conn)
     infoDict = dict()

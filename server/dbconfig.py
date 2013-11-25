@@ -4,8 +4,10 @@ import rethinkdb as r
 HOST = "localhost"
 PORT = 28015
 DB = "finance"
-TABLE = "cache"
-PRIMARY_KEY = "index"
+CACHE_TABLE = "cache"
+USER_TABLE = "users"
+CACHE_PRIMARY_KEY = "index"
+USER_PRIMARY_KEY = "username"
 
 # Shouldn't really be here but this is where my global vars live
 # Shows the database update interval in seconds
@@ -25,8 +27,12 @@ def init():
 def create(conn):
     r.db_create(DB).run(conn)
     r.db(DB).table_create(
-        TABLE,
-        primary_key = PRIMARY_KEY
+        CACHE_TABLE,
+        primary_key = CACHE_PRIMARY_KEY
+    ).run(conn)
+    r.db(DB).table_create(
+        USER_TABLE,
+        primary_key = USER_PRIMARY_KEY
     ).run(conn)
 
 
