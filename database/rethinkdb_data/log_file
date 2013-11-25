@@ -1,18 +1,16 @@
-2013-11-24T22:15:18.032224000 0.168333s info: Creating directory /Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data
-2013-11-24T22:15:18.032572000 0.168680s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data' did not already exist.)
-2013-11-24T22:15:18.032620000 0.168729s info: Running rethinkdb 1.5.2 (CLANG 4.1 ((tags/Apple/clang-421.11.66)))...
-2013-11-24T22:15:18.037129000 0.173237s info: Running on Darwin 12.5.0 x86_64
-2013-11-24T22:15:18.037179000 0.173288s info: Loading data from directory /Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data
-2013-11-24T22:15:22.265489000 4.401716s info: Listening for intracluster connections on port 29015
-2013-11-24T22:15:22.266677000 4.402904s info: Listening for client driver connections on port 28015
-2013-11-24T22:15:22.266690000 4.402917s info: Listening for administrative HTTP connections on port 8080
-2013-11-24T22:15:22.266692000 4.402919s info: Listening on addresses: 127.0.0.1
-2013-11-24T22:15:22.266693000 4.402920s info: To fully expose RethinkDB on the network, bind to all addresses
-2013-11-24T22:15:22.266694000 4.402920s info: by running rethinkdb with the `--bind all' command line option.
-2013-11-24T22:15:22.266695000 4.402921s info: Server ready
-2013-11-24T22:15:32.742653000 14.879114s info: Applying data {"databases":{"a34697a1-6cbf-4de0-8373-1d14aa3af5ab":null}}
-2013-11-24T22:15:48.176697000 30.313510s info: Server got SIGINT; shutting down...
-2013-11-24T22:15:48.176949000 30.313761s info: Shutting down client connections...
-2013-11-24T22:15:48.177343000 30.314156s info: All client connections closed.
-2013-11-24T22:15:48.177353000 30.314166s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
-2013-11-24T22:15:48.177355000 30.314167s info: Storage engine shut down.
+2013-11-25T00:37:51.110791000 0.002679s info: Creating directory /Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data
+2013-11-25T00:37:51.110922000 0.002809s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data' did not already exist.)
+2013-11-25T00:37:51.110963000 0.002850s info: Running rethinkdb 1.10.1 (CLANG 4.2 (clang-425.0.28))...
+2013-11-25T00:37:51.114570000 0.006457s info: Running on Darwin 12.5.0 x86_64
+2013-11-25T00:37:51.114613000 0.006500s info: Loading data from directory /Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data
+2013-11-25T00:37:54.900625000 3.792582s info: Listening for intracluster connections on port 29015
+2013-11-25T00:37:54.901749000 3.793706s info: Listening for client driver connections on port 28015
+2013-11-25T00:37:54.901809000 3.793766s info: Listening for administrative HTTP connections on port 8080
+2013-11-25T00:37:54.901810000 3.793767s info: Listening on addresses: 127.0.0.1
+2013-11-25T00:37:54.901811000 3.793768s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-25T00:37:54.901811000 3.793768s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-25T00:37:54.901812000 3.793769s info: Server ready
+2013-11-25T00:39:00.412579000 69.306094s info: Applying data {"databases":{"fa060148-d2eb-4773-920f-904f74edb56c":null},"rdb_namespaces":{"8b3387dc-b0a7-48e2-bef5-c46d6eeb9ef4":null}}
+2013-11-25T00:45:54.574061000 483.477347s info: Applying data {"databases":{"49b94654-694c-456f-a3d7-6cb8fe48dd73":null},"rdb_namespaces":{"744e85b2-2c02-4795-8b51-303a4fa8fcf7":null}}
+2013-11-25T00:47:56.476932000 605.383096s info: Applying data {"databases":{"e9bd4085-8195-46ce-b718-fda296269a84":null},"rdb_namespaces":{"8748af17-6ea9-4c79-aa05-f6e5d6169942":null}}
+2013-11-25T00:48:47.747112000 656.654479s info: Applying data {"databases":{"a8c54412-5098-44ea-ad7f-6ac27e6fddcf":null},"rdb_namespaces":{"0260fd39-f3e0-4d44-a821-da421d5b97cb":null}}

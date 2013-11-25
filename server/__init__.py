@@ -1,3 +1,3 @@
 
-import finan
+from app import *
 

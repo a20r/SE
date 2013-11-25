@@ -28,7 +28,13 @@ class StockInfo:
 
         return urllib.urlopen(url).read().strip().strip('"')
 
-    def get_all(self):
+    def __trytype(self, maybeVar, toType):
+        try:
+            return toType(maybeVar)
+        except ValueError:
+            return maybeVar
+
+    def all(self):
         """
         Get all available quote data for the given ticker symbol.
         Returns a dictionary.
@@ -46,78 +52,82 @@ class StockInfo:
         data['dividend_per_share'] = values[8]
         data['dividend_yield'] = values[9]
         data['earnings_per_share'] = values[10]
-        data['52_week_high'] = values[11]
-        data['52_week_low'] = values[12]
-        data['50day_moving_avg'] = values[13]
-        data['200day_moving_avg'] = values[14]
+        data['fifty_two_week_high'] = values[11]
+        data['fifty_two_week_low'] = values[12]
+        data['fifty_day_moving_avg'] = values[13]
+        data['two_hundred_day_moving_avg'] = values[14]
         data['price_earnings_ratio'] = values[15]
         data['price_earnings_growth_ratio'] = values[16]
         data['price_sales_ratio'] = values[17]
         data['price_book_ratio'] = values[18]
         data['short_ratio'] = values[19]
+
+        for key in data:
+            data[key] = self.__trytype(data[key], float)
+
         return data
 
-    def get_price(self):
-        return float(self.__request('l1'))
+    def price(self):
+        return self.__trytype(self.__request('l1'), float)
 
-    def get_change(self):
-        return float(self.__request('c1'))
+    def change(self):
+        return self.__trytype(self.__request('c1'), float)
 
-    def get_volume(self):
-        return float(self.__request('v'))
+    def volume(self):
+        return self.__trytype(self.__request('v'), float)
 
-    def get_avg_daily_volume(self):
-        return float(self.__request('a2'))
+    def avg_daily_volume(self):
+        return self.__trytype(self.__request('a2'), float)
 
-    def get_stock_exchange(self):
-        return float(self.__request('x'))
+    def stock_exchange(self):
+        return self.__trytype(self.__request('x'), float)
 
-    def get_market_cap(self):
-        return float(self.__request('j1'))
+    def market_cap(self):
+        return self.__trytype(self.__request('j1'), float)
 
-    def get_book_value(self):
-        return float(self.__request('b4'))
+    def book_value(self):
+        return self.__trytype(self.__request('b4'), float)
 
-    def get_ebitda(self):
-        return float(self.__request('j4'))
+    def ebitda(self):
+        return self.__trytype(self.__request('j4'), float)
 
-    def get_dividend_per_share(self):
-        return float(self.__request('d'))
+    def dividend_per_share(self):
+        return self.__trytype(self.__request('d'), float)
 
-    def get_dividend_yield(self):
-        return float(self.__request('y'))
+    def dividend_yield(self):
+        return self.__trytype(self.__request('y'), float)
 
-    def get_earnings_per_share(self):
-        return float(self.__request('e'))
+    def earnings_per_share(self):
+        return self.__trytype(self.__request('e'), float)
 
-    def get_52_week_high(self):
-        return float(self.__request('k'))
+    def fifty_two_week_high(self):
+        return self.__trytype(self.__request('k'), float)
 
-    def get_52_week_low(self):
-        return float(self.__request('j'))
+    def fifty_two_week_low(self):
+        return self.__trytype(self.__request('j'), float)
 
-    def get_50day_moving_avg(self):
-        return float(self.__request('m3'))
+    def fiftyday_moving_avg(self):
+        return self.__trytype(self.__request('m3'), float)
 
-    def get_200day_moving_avg(self):
-        return float(self.__request('m4'))
+    def two_hundred_day_moving_avg(self):
+        return self.__trytype(self.__request('m4'), float)
 
-    def get_price_earnings_ratio(self):
-        return float(self.__request('r'))
+    def price_earnings_ratio(self):
+        return self.__trytype(self.__request('r'), float)
 
-    def get_price_earnings_growth_ratio(self):
-        return float(self.__request('r5'))
+    def price_earnings_growth_ratio(self):
+        return self.__trytype(self.__request('r5'), float)
 
-    def get_price_sales_ratio(self):
-        return float(self.__request('p5'))
+    def price_sales_ratio(self):
+        return self.__trytype(self.__request('p5'), float)
 
-    def get_price_book_ratio(self):
-        return float(self.__request('p6'))
+    def price_book_ratio(self):
+        return self.__trytype(self.__request('p6'), float)
 
-    def get_short_ratio(self):
-        return float(self.__request('s7'))
+    def short_ratio(self):
+        return self.__trytype(self.__request('s7'), float)
 
-    def get_historical_prices(self, start_date, end_date):
+    def historical_prices(self, start_date, end_date):
         """
         Get historical prices for the given ticker symbol.
         Date format is 'YYYYMMDD'

@@ -36,7 +36,7 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
-@app.route('/')
+@app.route('/show_entries')
 def show_entries():
     cur = g.db.execute('select name, password from entries order by id desc')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
