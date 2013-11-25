@@ -1,0 +1,79 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+body {
+	background-color: #ced6d8;
+	background-image: url("../img/stocks.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	font-family: 'Roboto', sans-serif;
+}
+.form-register {
+	max-width: 33%;
+	padding: 15px;
+	margin: 0 auto;
+}
+.margin-bottom-sm {
+	margin-bottom: 8px;
+}
+.navbar-default {
+	background-color: #2c3e50;
+	border: none;
+}
+.navbar-default .navbar-nav>li>a {
+	color: #ecf0f1;
+}
+.navbar-default .navbar-nav>li>a:hover {
+	color: #ecf0f1;
+}
+.navbar-default .navbar-nav>li>a:hover {
+	background-color: #ecf0f1;
+	color: #2c3e50;
+}
+.navbar-default .navbar-nav>.active>a {
+	background-color: #ecf0f1;
+}
+.navbar-default .navbar-nav>.active>a:hover {
+	color: #ecf0f1;
+	background-color: #2c3e50;
+}
+.navbar>.container .navbar-brand {
+	color: #ecf0f1;
+	background-color: #2c3e50;
+}
+h1 {
+	font-family: 'Roboto', sans-serif; font-weight: 300;
+}
+label {
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif; font-weight: 700;
+}
+h4 {
+	font-size: 44px;
+	font-family: 'Roboto', sans-serif; font-weight: 300;
+}
+.arrowPd {
+	color: #d24444;
+	margin: 10px 0 10px 0;
+	font-size: 44px;
+}
+.arrowPu {
+	color: #2ea58e;
+	margin: 10px 0 10px 0;
+	font-size: 44px;
+}
+.smallLable {
+	color: #2c3e50;
+	margin: 10px 0 0 0;
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif; font-weight: 700;
+	font-size: 24px;
+}
+.bottomL {
+	color: #2c3e50;
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif; font-weight: 700;
+}

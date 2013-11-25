@@ -1,43 +1,59 @@
-2013-11-25T00:37:51.110791000 0.002679s info: Creating directory /Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data
-2013-11-25T00:37:51.110922000 0.002809s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data' did not already exist.)
-2013-11-25T00:37:51.110963000 0.002850s info: Running rethinkdb 1.10.1 (CLANG 4.2 (clang-425.0.28))...
-2013-11-25T00:37:51.114570000 0.006457s info: Running on Darwin 12.5.0 x86_64
-2013-11-25T00:37:51.114613000 0.006500s info: Loading data from directory /Users/wallarelvo-mac/Documents/Uni/SE/database/rethinkdb_data
-2013-11-25T00:37:54.900625000 3.792582s info: Listening for intracluster connections on port 29015
-2013-11-25T00:37:54.901749000 3.793706s info: Listening for client driver connections on port 28015
-2013-11-25T00:37:54.901809000 3.793766s info: Listening for administrative HTTP connections on port 8080
-2013-11-25T00:37:54.901810000 3.793767s info: Listening on addresses: 127.0.0.1
-2013-11-25T00:37:54.901811000 3.793768s info: To fully expose RethinkDB on the network, bind to all addresses
-2013-11-25T00:37:54.901811000 3.793768s info: by running rethinkdb with the `--bind all` command line option.
-2013-11-25T00:37:54.901812000 3.793769s info: Server ready
-2013-11-25T00:39:00.412579000 69.306094s info: Applying data {"databases":{"fa060148-d2eb-4773-920f-904f74edb56c":null},"rdb_namespaces":{"8b3387dc-b0a7-48e2-bef5-c46d6eeb9ef4":null}}
-2013-11-25T00:45:54.574061000 483.477347s info: Applying data {"databases":{"49b94654-694c-456f-a3d7-6cb8fe48dd73":null},"rdb_namespaces":{"744e85b2-2c02-4795-8b51-303a4fa8fcf7":null}}
-2013-11-25T00:47:56.476932000 605.383096s info: Applying data {"databases":{"e9bd4085-8195-46ce-b718-fda296269a84":null},"rdb_namespaces":{"8748af17-6ea9-4c79-aa05-f6e5d6169942":null}}
-2013-11-25T00:48:47.747112000 656.654479s info: Applying data {"databases":{"a8c54412-5098-44ea-ad7f-6ac27e6fddcf":null},"rdb_namespaces":{"0260fd39-f3e0-4d44-a821-da421d5b97cb":null}}
-2013-11-25T13:37:36.480513819 0.022807s info: Running rethinkdb 1.8.0-0ubuntu1~quantal (GCC 4.7.2)...
-2013-11-25T13:37:36.482854562 0.025147s info: Running on Linux 3.5.0-17-generic x86_64
-2013-11-25T13:37:36.483276692 0.025569s info: Loading data from directory /root/Projects/SE/database/rethinkdb_data
-2013-11-25T13:37:36.513323779 0.055616s error: File version is incorrect. This file was created with RethinkDB's serializer version 1.10, but you are trying to read it with version 1.8.  See http://rethinkdb.com/docs/backup/ for information on backing up and restoring data.
-2013-11-25T13:38:33.219475526 0.002973s info: Running rethinkdb 1.10.1-0ubuntu1~quantal (GCC 4.7.2)...
-2013-11-25T13:38:33.225427030 0.008925s info: Running on Linux 3.5.0-17-generic x86_64
-2013-11-25T13:38:33.225936746 0.009434s info: Loading data from directory /root/Projects/SE/database/rethinkdb_data
-2013-11-25T13:38:33.240122455 0.023620s info: Listening for intracluster connections on port 29015
-2013-11-25T13:38:33.241918318 0.025416s info: Listening for client driver connections on port 28015
-2013-11-25T13:38:33.242189564 0.025687s info: Listening for administrative HTTP connections on port 8080
-2013-11-25T13:38:33.242190944 0.025688s info: Listening on addresses: 127.0.0.1
-2013-11-25T13:38:33.242191625 0.025688s info: To fully expose RethinkDB on the network, bind to all addresses
-2013-11-25T13:38:33.242192322 0.025689s info: by running rethinkdb with the `--bind all` command line option.
-2013-11-25T13:38:33.242193008 0.025690s info: Server ready
-2013-11-25T13:38:34.516798283 1.300296s info: Server got SIGINT; shutting down...
-2013-11-25T13:38:34.517259561 1.300757s info: Shutting down client connections...
-2013-11-25T13:38:34.517572110 1.301069s info: All client connections closed.
-2013-11-25T13:38:34.517800996 1.301298s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
-2013-11-25T13:38:34.518664479 1.302162s info: Storage engine shut down.
-2013-11-25T13:38:36.767404139 0.002119s info: Running rethinkdb 1.10.1-0ubuntu1~quantal (GCC 4.7.2)...
-2013-11-25T13:38:36.770391565 0.005107s info: Running on Linux 3.5.0-17-generic x86_64
-2013-11-25T13:38:36.770675124 0.005390s info: Loading data from directory /root/Projects/SE/database/rethinkdb_data
-2013-11-25T13:38:36.785762019 0.020477s info: Listening for intracluster connections on port 29015
-2013-11-25T13:38:36.787680482 0.022395s info: Listening for client driver connections on port 28015
-2013-11-25T13:38:36.788089192 0.022804s info: Listening for administrative HTTP connections on port 8080
-2013-11-25T13:38:36.788293409 0.023008s info: Listening on addresses: 127.0.0.1, 82.196.12.41
-2013-11-25T13:38:36.788294515 0.023009s info: Server ready
+2013-11-25T14:59:17.598400568 0.003575s info: Creating directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-25T14:59:17.598830848 0.004005s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/kamile/Projects/SE/database/rethinkdb_data' did not already exist.)
+2013-11-25T14:59:17.598974248 0.004148s info: Running rethinkdb 1.10.1-0ubuntu1~raring (GCC 4.7.3)...
+2013-11-25T14:59:17.601358808 0.006534s info: Running on Linux 3.8.0-33-generic i686
+2013-11-25T14:59:17.601561848 0.006736s info: Loading data from directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-25T14:59:17.604888888 0.010063s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/tmp/metadata.create" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T14:59:17.703382848 0.108557s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/tmp/metadata.create" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T14:59:17.955862408 0.361037s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/tmp/auth_metadata.create" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T14:59:18.040268448 0.445443s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/tmp/auth_metadata.create" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T14:59:18.305506208 0.710680s info: Listening for intracluster connections on port 29015
+2013-11-25T14:59:18.307240248 0.712415s info: Listening for client driver connections on port 28015
+2013-11-25T14:59:18.307285488 0.712459s info: Listening for administrative HTTP connections on port 8080
+2013-11-25T14:59:18.307288768 0.712463s info: Listening on addresses: 127.0.0.1, 127.0.1.1
+2013-11-25T14:59:18.307291728 0.712466s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-25T14:59:18.307294728 0.712469s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-25T14:59:18.307297728 0.712472s info: Server ready
+2013-11-25T14:59:48.553107488 30.958282s info: Server got SIGINT; shutting down...
+2013-11-25T14:59:48.553335608 30.958510s info: Shutting down client connections...
+2013-11-25T14:59:48.553748568 30.958923s info: All client connections closed.
+2013-11-25T14:59:48.553752928 30.958927s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2013-11-25T14:59:48.553755968 30.958930s info: Storage engine shut down.
+2013-11-25T14:59:58.799715368 0.004050s info: Running rethinkdb 1.10.1-0ubuntu1~raring (GCC 4.7.3)...
+2013-11-25T14:59:58.802842888 0.007179s info: Running on Linux 3.8.0-33-generic i686
+2013-11-25T14:59:58.803241488 0.007576s info: Loading data from directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-25T14:59:58.807186728 0.011521s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T14:59:58.812647968 0.016982s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/auth_metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T14:59:58.818796528 0.023131s info: Listening for intracluster connections on port 29015
+2013-11-25T14:59:58.820199528 0.024534s info: Listening for client driver connections on port 28015
+2013-11-25T14:59:58.820461368 0.024796s info: Listening for administrative HTTP connections on port 8080
+2013-11-25T14:59:58.820464968 0.024799s info: Listening on addresses: 127.0.0.1, 127.0.1.1
+2013-11-25T14:59:58.820467608 0.024802s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-25T14:59:58.820470488 0.024804s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-25T14:59:58.820473968 0.024808s info: Server ready
+2013-11-25T15:00:48.757501128 49.961836s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/tmp/ace364a8-0c4c-4b25-b0ed-8ecd925f3659.create" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T15:00:48.804656888 50.008991s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/tmp/ace364a8-0c4c-4b25-b0ed-8ecd925f3659.create" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T15:18:58.815262168 1140.019597s info: Server got SIGINT; shutting down...
+2013-11-25T15:18:58.815818328 1140.020153s info: Shutting down client connections...
+2013-11-25T15:18:58.816164768 1140.020499s info: All client connections closed.
+2013-11-25T15:18:58.816383408 1140.020718s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2013-11-25T15:18:58.818418768 1140.022754s info: Storage engine shut down.
+2013-11-25T15:19:02.036526768 0.003250s info: Running rethinkdb 1.10.1-0ubuntu1~raring (GCC 4.7.3)...
+2013-11-25T15:19:02.039800128 0.006523s info: Running on Linux 3.8.0-33-generic i686
+2013-11-25T15:19:02.039998168 0.006721s info: Loading data from directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-25T15:19:02.043339848 0.010062s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T15:19:02.049172048 0.015895s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/auth_metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T15:19:02.055864368 0.022587s info: Listening for intracluster connections on port 29015
+2013-11-25T15:19:02.057926288 0.024649s info: Listening for client driver connections on port 28015
+2013-11-25T15:19:02.058165808 0.024889s info: Listening for administrative HTTP connections on port 8080
+2013-11-25T15:19:02.058169128 0.024892s info: Listening on addresses: 127.0.0.1, 127.0.1.1
+2013-11-25T15:19:02.058171728 0.024894s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-25T15:19:02.058174408 0.024897s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-25T15:19:02.058176928 0.024899s info: Server ready
+2013-11-25T15:19:02.058744408 0.025467s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/ace364a8-0c4c-4b25-b0ed-8ecd925f3659" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-25T15:36:52.903942608 1070.870665s info: Someone asked for the nonwhitelisted file /static/html/registration.html, if this should be accessible add it to the whitelist.
+2013-11-25T15:37:09.344687448 1087.311410s info: Someone asked for the nonwhitelisted file /static/html/registration.html, if this should be accessible add it to the whitelist.
+2013-11-25T15:37:11.172693888 1089.139417s info: Someone asked for the nonwhitelisted file /static/html/registration.html, if this should be accessible add it to the whitelist.
+2013-11-25T15:37:51.870102088 1129.836825s info: Someone asked for the nonwhitelisted file /static/html/registration.html, if this should be accessible add it to the whitelist.
+2013-11-25T15:38:47.735437368 1185.702160s info: Someone asked for the nonwhitelisted file /static/html/registration.html, if this should be accessible add it to the whitelist.
+2013-11-25T15:39:01.466898768 1199.433621s info: Someone asked for the nonwhitelisted file /registration.html, if this should be accessible add it to the whitelist.

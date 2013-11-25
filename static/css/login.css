@@ -1,0 +1,77 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+body {
+  background-color: #ced6d8;
+  background-image: url("../img/stocks.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.form-signin {
+  max-width: 400px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;  
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  color: #7f8c8d;
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7; 
+  margin-bottom: 20px;
+  /*margin-bottom: -1px;*/
+  /*border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;*/
+}
+.form-signin input[type="password"] {
+  background-color: #ecf0f1;
+  border-color: #bdc3c7;
+  margin-bottom: 20px;
+  font-size: 16px;
+ /* border-top-left-radius: 0;
+  border-top-right-radius: 0;*/
+}
+.well {
+  background-color: #3a4b5c;
+  border: none;
+  color: #dadfe1;
+  padding: 10px 40px 40px 40px;
+}
+label {
+  text-transform: uppercase;
+  font-size: 8pt;
+}
+.btn-primary {
+  background-color: #1abc9c;
+  text-transform: uppercase;
+  font-size: 10pt;
+  border-radius: 4px;
+  font-weight: bold;
+  height: 45px;
+}
+.btn-primary:hover {
+  background-color: #1bdfb8;
+  border-radius: 4px;
+  height: 45px;
+}
