@@ -3,7 +3,8 @@
 
 //set for now (can update dynamically later for each graph
 var currency = "(£)";
-var csvFile = "data/aal.csv";
+var index = $.cookie("index");
+var csvFile = "data/" + index.toLowerCase() + ".csv";
 
 //Set graph position
 var margin = {top: 10, right: 60, bottom: 100, left: 40};
