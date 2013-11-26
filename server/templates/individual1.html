@@ -23,29 +23,20 @@
 
 	<link rel="stylesheet" href="css/main_page.css">
 	<script src="/js/individual.js"></script>
-	<script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
 </head>
 <body>
 	<!-- Static navbar -->
-	<div class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="navbar navbar-default navbar-static-top" role="navigation" style="height: 60px; padding: 5px 0">
 		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Project name</a>
+			<div class="navbar-header image" style="margin-right:200px">
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">FTSE 1000 FEED</a></li>
-					<li><a href="#about">FOLLOW UPS</a></li>
-					<li><a href="#contact">ABOUT US</a></li>
+					<li><a href="/following.html">FOLLOW UPS</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/logout">LOGOUT</a></li>
+					<li id="logCond"><a href="/logout">LOGOUT</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
@@ -55,10 +46,10 @@
 
 	<div class="container" style="background-color: rgba(216,216,216,0.7);">
 		<div id="title" class="Title">
-			<h2 id="name">  </h2>
+			<h2><strong>AAL</strong> Sports Direct International PLC </h2>
 		</div>
 		<div id="buttonFollow">
-			<button onclick="follow()" class="btn btn-lg btn-primary btn-block FollowButton" 
+			<button onclick="" class="btn btn-lg btn-primary btn-block FollowButton" 
 			style="width: 100px;"><i class="fa fa-plus-circle"></i> FOLLOW</button> 
 		</div>
 		<div class="Last">
@@ -68,27 +59,27 @@
 		</div>
 		<div class="CurrentPricePlaceholder">
 			<div class="CurrentPriceLabel">CURRENT PRICE</div>
-			<div id="CurrentPrice"></div>
-			<div><i id="CurrentPriceArrow" class="fa fa-arrow-up ArrowUp"></i></div>
+			<div id="CurrentPrice">1019.34</div>
+			<div id="CurrentPriceArrow"><i class="fa fa-arrow-up ArrowUp"></i></div>
 			<div class="Last"></div>
 		</div>
 		<div class="Line"></div>
 		<div class="BottomRowHolder">
 			<div class="HighestPricePlaceholder">
 				<div class="CurrentPriceLabel">HIGHEST PRICE</div>
-				<div id="HighestPrice" class="Font"></div>
+				<div id="HighestPrice" class="Font">1019.34</div>
 				<div id="HighestPriceArrow"><i class="fa fa-arrow-up ArrowUp"></i></div>
 				<div class="Last"></div>
 			</div>
 			<div class="HighestPricePlaceholder">
 				<div class="CurrentPriceLabel">LOWEST PRICE</div>
-				<div id="LowestPrice" class="Font"></div>
+				<div id="LowestPrice" class="Font">1019.34</div>
 				<div id="LowestPriceArrow"><i class="fa fa-arrow-down ArrowDown"></i></div>
 				<div class="Last"></div>
 			</div>
 			<div class="HighestPricePlaceholder WithoutBorder">
 				<div class="CurrentPriceLabel">CHANGE</div>
-				<div id="Change" class="Font"></div>
+				<div id="Change" class="Font">7.5%</div>
 			</div>
 		</div>
 <!-- 		<div class="row">
