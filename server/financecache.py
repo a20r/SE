@@ -160,12 +160,13 @@ def updateAllRealtime():
         finally:
             db.MUTEX.release()
 
+    db.UPDATING_REALTIME = False
+
 def updateAllHistorical():
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
         getTime() - daysToSeconds(5)
     )
-
     for stockName in db.STOCK_MAP.keys():
         while HISTORICAL_IN_USE or REALTIME_IN_USE or FOLLOWING_IN_USE:
             pass
@@ -176,7 +177,7 @@ def updateAllHistorical():
             print "uh oh"
         finally:
             db.MUTEX.release()
-
+    db.UPDATING_HISTORICAL = False
 @app.route("/follow", methods = ["POST"])
 def followStock():
     global FOLLOWING_IN_USE
@@ -261,7 +262,16 @@ def giveRealtimeStock(stockName, infoType):
 
 @app.route("/get_stocks/<stockName>", methods = ["GET"])
 def giveRealtimeStockAll(stockName):
-    return json.dumps(getStock(stockName, "all"))
+    global REALTIME_IN_USE
+    REALTIME_IN_USE = True
+    resp = dict()
+    try:
+        db.MUTEX.acquire()
+        resp = json.dumps(getStock(stockName, "all"))
+    finally:
+        db.MUTEX.release()
+    REALTIME_IN_USE = False
+    return resp
 
 @app.route("/get_stocks", methods = ["GET"])
 def giveAllRealtimeData(stocksToGet = None):
@@ -283,10 +293,10 @@ def giveAllRealtimeData(stocksToGet = None):
     finally:
         db.MUTEX.release()
     REALTIME_IN_USE = False
+
     if not db.UPDATING_REALTIME:
         db.UPDATING_REALTIME = True
         updateThread.start()
-        db.UPDATING_REALTIME = False
 
     return json.dumps(stockData)
 
@@ -314,20 +324,28 @@ def giveAllHistoricalData(stocksToGet = None):
     if not db.UPDATING_HISTORICAL:
         db.UPDATING_HISTORICAL = True
         updateThread.start()
-        db.UPDATING_HISTORICAL = False
 
     return json.dumps(historicalData)
 
 @app.route("/get_historical_stocks/<stockName>", methods = ["GET"])
 def giveHistoricalData(stockName):
+    global HISTORICAL_IN_USE
+    HISTORICAL_IN_USE = True
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
         getTime() - daysToSeconds(5)
     )
 
-    return json.dumps(
-        getHistoricalData(stockName, fiveDaysAgo)
-    )
+    resp = dict()
+    try:
+        db.MUTEX.acquire()
+        resp = json.dumps(
+            getHistoricalData(stockName, fiveDaysAgo)
+        )
+    finally:
+        db.MUTEX.release()
+    HISTORICAL_IN_USE = False
+    return resp
 
 @app.route("/get_stock_direct/<stockName>/<infoType>", methods = ["GET"])
 def getStockDirect(stockName, infoType):
