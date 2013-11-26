@@ -1,6 +1,5 @@
 
 $(document).ready(function() { 
-	checkFollowing();
 	checkLogin();
 	checkFollowedButton();
 	loadPage($.cookie("index"));
@@ -9,19 +8,23 @@ $(document).ready(function() {
 
 
 function checkFollowedButton() {
-	var button = document.getElementById("followedButton");
+	var button = document.getElementById("buttonFollow");
 	var loginCookie = $.cookie("stock_auth_token");
 	if (loginCookie == undefined || loginCookie.length <= 0) {
 		button.style.display = "none";
-		return;
+		console.log("No login cookie 1");
+	} else {
+		$.getJSON("/get_following", function(jsonObj) {
+			if (jsonObj.length > 0) {
+				button.style.display = "";
+				console.log("cookie");
+				checkFollowing();
+			} else {
+				console.log("No login cookie");
+				button.style.display = "none";
+			}
+		});
 	}
-	$.getJSON("/get_following", function(jsonObj) {
-		if (jsonObj.length > 0) {
-			button.style.display = "";
-		} else {
-			button.style.display = "none";
-		}
-	});
 }
 
 function loadPage(index){
@@ -90,19 +93,10 @@ function unfollow() {
 
 function checkLogin() {
 	var login = document.getElementById("logCond");
-	var button = document.getElementById("buttonFollow");
-	var cookie = document.cookie;
-	if (cookie.indexOf("stock_auth_token=") !== -1) {
-		var cookieValue = cookie.indexOf(cookie.indexOf("stock_auth_token="));
-		if (cookieValue !== -1) {
-			button.className = "";
-			login.innerHTML = '<a href="javascript:logout();">LOGOUT</a>'
-		} else {
-			button.className = "HiddenClass";
-			login.innerHTML = '<a href="/login.html">LOGIN</a>';
-		}
+	var cookie = $.cookie("stock_auth_token");
+	if (cookie != undefined && cookie.length > 0) {
+		login.innerHTML = '<a href="javascript:logout();">LOGOUT</a>';
 	} else {
-		button.className = "HiddenClass";
 		login.innerHTML = '<a href="/login.html">LOGIN</a>';
 	}
 }
