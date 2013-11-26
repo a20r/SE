@@ -232,3 +232,9 @@
 	border-bottom: 1px solid rgba(44,62,80,0.5);
 	margin: 10px 0 15px 0;
 }
+
+.image {
+	background: url('/img/logo.png');
+	width: 156px;
+	height: 48px;
+}
