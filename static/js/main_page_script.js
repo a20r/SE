@@ -131,7 +131,6 @@ function loadCurrentValues(data, start) {
 
 function loadMainPage() {
 	var stocksTable = document.getElementById("stocks");
-	var test = document.getElementById("test");
 	$.getJSON("/get_historical_stocks", function (jsonObj) {
 		console.log(jsonObj);
 		for (var key in jsonObj) {
@@ -139,7 +138,6 @@ function loadMainPage() {
 				var history = jsonObj[key]["history_list"];
 				if (history.length > 1) {
 					var item = history[0];
-					test.innerHTML = item;
 					console.log(item);
 					var name = jsonObj[key]["name"];
 					var change = history[0]["Close"] / history[1]["Close"] * 100 - 100;
