@@ -11,6 +11,15 @@ $(document).ready(function() {
 	}
 })
 
+function hideFilter() {
+	var filter = document.getElementById("filterContainer");
+	if (filter.className != "HiddenClass") {
+		filter.className = "HiddenClass";
+	} else {
+		filter.className = "";
+	}
+}
+
 function loadRecommended() {
 	var recommended = document.getElementById("recommended");
 	var html = '';
@@ -23,7 +32,8 @@ function loadRecommended() {
 		var recStock = jsonObj["stocks"];
 		var html = '';
 		for (var item in recStock) {
-		html += '<div class=\"RecommendedPlaceholder\">\r\n' +
+		html += '<div class=\"RecommendedPlaceholder\"' +
+				' onclick=\"loadIndividual(\'' + recStock[item] + '\')\">\r\n' +
 				'<div class=\"RecSymbol\">' + recStock[item] +
 				'</div>\r\n</div>\r\n';
 		}
