@@ -1,3 +1,131 @@
 .HiddenClass {
 	display: none;
 }
+
+.PositiveChange {
+	color: #2ea58e;
+}
+
+.NegativeChange {
+	color: #d24444;
+}
+
+.ItemContainer {
+	border-right: 1px solid rgba(44,62,80,0.5); 
+	padding-left: 10px;
+	padding-right: 20px;
+}
+
+.LastItemContainer {
+	padding-left: 10px;
+	padding-right: 20px;
+}
+
+.ItemPlaceholder {
+	float: left;
+	width: 25%;
+	padding: 10px 0;
+	border-bottom: 1px solid rgba(44,62,80,0.5);
+}
+
+.ItemPlaceholder:hover {
+	background: rgba(0, 0, 0, 0.06);
+}
+
+.BottomRowPlaceholder.ItemPlaceholder {
+	border-bottom: none;
+
+}
+
+.BottomRowPlaceholder:hover {
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.Symbol {
+	color: #2c3e50;
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif; font-weight: 700;
+	font-size: 20px;
+	line-height: 20px;
+}
+
+.Price {
+	color: #2c3e50;
+	float: left;
+	font-size: 46px;
+	line-height: 46px;
+	font-family: 'Roboto', sans-serif; font-weight: 200;
+	margin-top: 10px;
+}
+
+.Arrow {
+	float: right;
+	font-size: 26px;
+	line-height: 46px;
+	text-shadow: 0px 3px 0px #2e4052;
+	vertical-align: middle;
+	margin-top: 10px;
+}
+
+.ArrowUp {
+	color: #2ea58e;
+}
+
+.ArrowDown {
+	color: #d24444;
+}
+
+.Name {
+	clear: both;
+	color: rgba(44,62,80,0.5);
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif; font-weight: 700;
+	padding-top: 8px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+#paging {
+	margin: auto;
+	display: block;
+	margin-top: 20px;
+}
+
+.CurrentPage {
+	background: #2c3e50;
+	width: 10px;
+	height: 10px;
+	border-radius: 1000px;
+	margin: 0 3px;
+	float: left;
+}
+
+.Page {
+	background: rgba(44,62,80,0.5);
+	width: 10px;
+	height: 10px;
+	border-radius: 1000px;
+	margin: 0 3px;
+	float: left;
+}
+
+.Page:hover{
+	background: rgba(44,62,80,0.8);
+	cursor: pointer;
+}
+
+.CurrentPage:hover{
+	background: rgba(44,62,80,0.8);
+	cursor: pointer;
+}
+
+.Last {
+	clear: both;
+}
+
+#chart{
+	margin-top:20px;
+}
