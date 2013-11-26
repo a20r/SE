@@ -10,9 +10,7 @@ from manageusers import *
 from financecache import *
 from pageserver import *
 from followstock import *
-
-updateAllRealtime()
-updateAllHistorical()
+from recommendation import *
 
 def run(host, port):
     app.run(
@@ -20,4 +18,7 @@ def run(host, port):
         port = int(port),
         debug = True
     )
+
+    updateAllRealtime()
+    updateAllHistorical()
 

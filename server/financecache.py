@@ -136,7 +136,7 @@ def getStock(stockName, infoType):
                 r.table(db.CACHE_TABLE).get(stockName).update(
                     infoDict
                 ).run(db.CONN)
-            except OverflowError, DecodeError:
+            except:
                 pass
         else:
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
@@ -185,7 +185,9 @@ def giveRealtimeStockAll(stockName):
     return json.dumps(getStock(stockName, "all"))
 
 @app.route("/get_stocks", methods = ["GET"])
-def giveAllRealtimeData():
+def giveAllRealtimeData(stocksToGet = None):
+    if stocksToGet == None:
+        stocksToGet = db.STOCK_MAP.keys()
     global REALTIME_IN_USE
     updateThread = threading.Thread(
         target = updateAllRealtime
@@ -195,7 +197,7 @@ def giveAllRealtimeData():
     REALTIME_IN_USE = True
     db.MUTEX.acquire()
     try:
-        for stockName in db.STOCK_MAP.keys():
+        for stockName in stocksToGet:
             stockData[stockName] = r.table(db.CACHE_TABLE).get(
                 stockName
             ).run(db.CONN)
@@ -210,7 +212,10 @@ def giveAllRealtimeData():
     return json.dumps(stockData)
 
 @app.route("/get_historical_stocks", methods = ["GET"])
-def giveAllHistoricalData():
+def giveAllHistoricalData(stocksToGet = None):
+    if stocksToGet == None:
+        stocksToGet = db.STOCK_MAP.keys()
+
     global HISTORICAL_IN_USE
     updateThread = threading.Thread(
         target = updateAllHistorical
@@ -221,7 +226,7 @@ def giveAllHistoricalData():
     try:
         historicalData = [
             r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
-            for stockName in db.STOCK_MAP.keys()
+            for stockName in stocksToGet
         ]
     finally:
         db.MUTEX.release()

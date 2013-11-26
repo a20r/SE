@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 import urllib2
 
 url = "http://www.digitallook.com/cgi-bin/dlmedia/security.cgi?csi=50058&action=brokerrecommendations&username=&ac"
@@ -16,6 +16,6 @@ def scrape():
             #remove dot from the end of string
             if index[-1] != '.':
                 indexes.append(index)
-            else: 
+            else:
                 indexes.append(index[:-1])
     return indexes

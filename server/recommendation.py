@@ -1,10 +1,12 @@
 import scraper
+from app import app
+from flask import jsonify
 
 @app.route("/recommend", methods = ["GET"])
 def getRecommendations():
     recommending = recommend()
     if recommending:
-    	recommending.reverse()	
+    	recommending.reverse()
         return jsonify(
             error = 0,
             message = "Recommends are ready",
@@ -23,7 +25,7 @@ def recommend():
     for sr in scraper.scrapers:
         dictionary = dict.fromkeys(sr());
         recommended = add(recommended, dictionary)
-    
+
     # stocks we are recommending
     recommending = []
     for index in sorted(recommended, key=recommended.get, reverse=True):
@@ -42,6 +44,6 @@ def add(recommended, dictionary):
 	for index in dictionary.keys():
 		if recommended.has_key(index):
 			recommended[index] += dictionary[index]
-		else: 
+		else:
 			recommended[index] = dictionary[index]
 	return recommended

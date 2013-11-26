@@ -4,15 +4,16 @@ from flask import request, render_template, jsonify, make_response
 import rethinkdb as r
 import dbconfig as db
 from app import app
+import json
 
 @app.route("/follow", methods = ["POST"])
 def followStock():
-    userDataList = r.table(db.USER_TABLE).get_all(
+    userData = r.table(db.USER_TABLE).get_all(
         request.cookies.get(db.AUTH_COOKIE),
         index = db.USER_SECONDARY_KEY
-    ).run(db.CONN)
+    )[0].run(db.CONN)
 
-    if len(userDataList) > 0:
+    if userData:
         stockName = request.form["stock_name"]
         if not stockName in db.STOCK_MAP.keys():
             return jsonify(
@@ -20,7 +21,6 @@ def followStock():
                 message = "Cannot follow an imaginary stock"
             )
 
-        userData = userDataList[0]
         if not stockName in userData[db.STOCKS_FOLLOWING_KEY]:
             userData[db.STOCKS_FOLLOWING_KEY].append(stockName)
             r.table(db.USER_TABLE).get(userData["username"]).update(
@@ -45,5 +45,21 @@ def followStock():
 
         resp.set_cookie(db.AUTH_COOKIE, "")
         return resp
+
+@app.route("/get_following", methods = ["GET"])
+def getFollowing():
+    userData = r.table(db.USER_TABLE).get_all(
+        request.cookies.get(db.AUTH_COOKIE),
+        index = db.USER_SECONDARY_KEY
+    )[0].run(db.CONN)
+    print userData
+    if userData:
+        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY])
+    else:
+        return json.dumps(list())
+
+@app.route("/unfollow", methods = ["POST"])
+def unfollow():
+    pass
 
 

@@ -3,14 +3,59 @@ $(document).ready(function() {
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		fillData();
 		loadMainPage();
+		checkLogin();
+		loadRecommended();
 
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
 	}
 })
 
+function loadRecommended() {
+	var recommended = document.getElementById("recommended");
+	var html = '';
+		for (var item = 0; item < 5; item++) {
+		html += '<div class=\"RecommendedPlaceholder\">\r\n' +
+				'</div>\r\n';
+		}
+	recommended.innerHTML = html;
+	$.getJSON("/recommend", function (jsonObj) {
+		var recStock = jsonObj["stocks"];
+		var html = '';
+		for (var item in recStock) {
+		html += '<div class=\"RecommendedPlaceholder\">\r\n' +
+				'<div class=\"RecSymbol\">' + recStock[item] +
+				'</div>\r\n</div>\r\n';
+		}
+		recommended.innerHTML = html;
+	});
+}
+
+function checkLogin() {
+	var login = document.getElementById("logCond");
+	var cookie = document.cookie;
+	if (cookie.indexOf("stock_auth_token=") !== -1) {
+		var cookieValue = cookie.indexOf(cookie.indexOf("stock_auth_token="));
+		if (cookieValue !== -1) {
+			login.innerHTML = '<a href="javascript:logout();">LOGOUT</a>'
+		} else {
+			login.innerHTML = '<a href="/login.html">LOGIN</a>';
+		}
+	} else {
+		login.innerHTML = '<a href="/login.html">LOGIN</a>';
+	}
+}
+
+function logout() {
+	document.cookie = 'stock_auth_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	window.location.replace("/main_page.html");
+}
+
 var updateTime = 10 * 1000
 var updateInterval = setInterval(fillData, updateTime)
+var currentPage = 0;
+var currentDataInUse;
+var allData;
 
 function fillData() {
 	allData = new Array();
@@ -29,15 +74,21 @@ function fillData() {
 				index++;
 			}
 		}
-		currentDataInUse = allData;
-  		loadCurrentValues(allData, 0);
-  		loadPaging(allData.length);
+
+		if (currentDataInUse == undefined) {
+		    currentDataInUse = allData;
+		} else {
+		    for (var i = 0; i < currentDataInUse.length; i++) {
+		        var cData = jsonObj[currentDataInUse[i][0]];
+		        currentDataInUse[i][1] = Math.floor(cData["price"] * 100) / 100;
+		        currentDataInUse[i][2] = cData["change"];
+		    }
+        }
+
+        loadCurrentValues(currentDataInUse, currentPage);
+  		loadPaging(currentDataInUse.length);
 	});
 }
-
-var currentPage = 0;
-var currentDataInUse;
-var allData;
 
 function loadPaging(dataLength) {
 	var paging = document.getElementById("paging");
@@ -79,7 +130,7 @@ function filterCurrent(value) {
 		var symbol = allData[row][0].toLowerCase();
 		var name = allData[row][3].toLowerCase();
 		value = value.toLowerCase();
-		if (symbol.indexOf(value) !== -1 || 
+		if (symbol.indexOf(value) !== -1 ||
 			name.indexOf(value) !== -1) {
 			currentDataInUse[index] = allData[row];
 			index++;
