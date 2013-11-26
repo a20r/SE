@@ -14,10 +14,9 @@ def getTime(toConvert = None):
 
     Arguments:
     toConvert -- time to convert into seconds
-    
+
     Return:
     Time in seconds
-    
     """
     if toConvert == None:
         return time.mktime(
@@ -31,7 +30,7 @@ def getTime(toConvert = None):
 def daysToSeconds(dayInt):
     """
     Get days in seconds
-    
+
     """
     return dayInt * 24 * 60 * 60
 
@@ -41,10 +40,10 @@ def dateToString(dateToConvert):
 
     Arguments:
     dateToConvert -- date to convert
-    
+
     Return:
     Converted date as a string
-    
+
     """
     return "".join(
         str(i) for i in [
@@ -60,12 +59,12 @@ def tryFloat(value):
 
     Arguments:
     value -- value to convert
-    
+
     Return:
-    Float value of the given value if convertion 
+    Float value of the given value if convertion
     was successful, otherwise return the same
     given value
-    
+
     """
     try:
         return float(value)
@@ -74,15 +73,15 @@ def tryFloat(value):
 
 def createHistoryDictList(histList):
     """
-    Creates a list of dictionaries that 
+    Creates a list of dictionaries that
     corresponds to historical data
 
     Arguments:
     histList -- list of list of historical data
-    
+
     Return:
     Created list
-    
+
     """
     if histList[0][0][0] == "<":
         return [dict()]
@@ -105,10 +104,10 @@ def getHistoricalData(stockName, startDate):
     Arguments:
     stockName -- symbols representing stock name
     startDate -- date to get historical data from
-    
+
     Return:
     Dictionary of historical data using the given values
-    
+
     """
     conn = r.connect(db = db.DB)
     stockName = stockName.upper()
@@ -164,10 +163,10 @@ def getStock(stockName, infoType):
     Arguments:
     stockName -- symbols representing stock name
     infoType -- type of information that is needed
-    
+
     Return:
     Dictionary of the requested data using the given values
-    
+
     """
     stockName = stockName.upper()
 
@@ -222,7 +221,7 @@ def getStock(stockName, infoType):
 def updateAllRealtime():
     """
     Updates all stock in the database.
-    
+
     """
     for stockName in db.STOCK_MAP.keys():
         getStock(stockName, "all")
@@ -232,7 +231,7 @@ def updateAllRealtime():
 def updateAllHistorical():
     """
     Updates historical data in the database
-    
+
     """
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
