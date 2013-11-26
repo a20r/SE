@@ -12,13 +12,17 @@ from pageserver import *
 from followstock import *
 from recommendation import *
 
+#updateAllRealtime()
+#updateAllHistorical()
+
 def run(host, port):
+	"""
+    Runs the server
+    
+    """
     app.run(
         host = host,
         port = int(port),
         debug = True
     )
-
-    #updateAllRealtime()
-    #updateAllHistorical()
 
