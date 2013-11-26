@@ -8,11 +8,13 @@ $(document).ready(function() {
 
 
 function checkFollowedButton() {
-	var button = document.getElementById("buttonFollow");
+	var button = document.getElementById("followedButton");
+	var stockFollowButton = document.getElementById("buttonFollow");
 	var loginCookie = $.cookie("stock_auth_token");
 	alert(loginCookie)
 	if (loginCookie == undefined || loginCookie.length <= 0) {
 		button.style.display = "none";
+		stockFollowButton.style.display = "none";
 		console.log("No login cookie 1");
 	} else {
 		$.getJSON("/get_following", function(jsonObj) {
@@ -23,6 +25,12 @@ function checkFollowedButton() {
 			} else {
 				console.log("No login cookie");
 				button.style.display = "none";
+				stockFollowButton.style.display = "";
+
+				var buttonStyle = document.getElementById("buttonFollowStyle");
+				buttonStyle.innerHTML = '<i class="fa fa-plus-circle"></i> FOLLOW';
+				$("#buttonFollowStyle").click(follow);
+				buttonStyle.className = "btn btn-lg btn-primary btn-block FollowButton";
 			}
 		});
 	}
@@ -73,7 +81,7 @@ function follow() {
         },
         success: function (obj) {
             console.log(obj);
-            checkFollowing();
+            checkFollowedButton();
         }
     });
 }
@@ -87,7 +95,7 @@ function unfollow() {
         },
         success: function (obj) {
             console.log(obj);
-            checkFollowing();
+            checkFollowedButton();
         }
     });
 }
