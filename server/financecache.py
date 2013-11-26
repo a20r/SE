@@ -12,6 +12,17 @@ HISTORICAL_IN_USE = False
 FOLLOWING_IN_USE = False
 
 def getTime(toConvert = None):
+    """
+    Get current time in seconds or convert
+    given time in seconds
+
+    Arguments:
+    toConvert -- time to convert into seconds
+    
+    Return:
+    Time in seconds
+    
+    """
     if toConvert == None:
         return time.mktime(
             datetime.datetime.now().timetuple()
@@ -22,9 +33,23 @@ def getTime(toConvert = None):
         )
 
 def daysToSeconds(dayInt):
+    """
+    Get days in seconds
+    
+    """
     return dayInt * 24 * 60 * 60
 
 def dateToString(dateToConvert):
+    """
+    Convert date into string
+
+    Arguments:
+    dateToConvert -- date to convert
+    
+    Return:
+    Converted date as a string
+    
+    """
     return "".join(
         str(i) for i in [
             dateToConvert.year,
@@ -34,12 +59,35 @@ def dateToString(dateToConvert):
     )
 
 def tryFloat(value):
+    """
+    Try to convert given value into a float
+
+    Arguments:
+    value -- value to convert
+    
+    Return:
+    Float value of the given value if convertion 
+    was successful, otherwise return the same
+    given value
+    
+    """
     try:
         return float(value)
     except:
         return value
 
 def createHistoryDictList(histList):
+    """
+    Creates a list of dictionaries that 
+    corresponds to historical data
+
+    Arguments:
+    histList -- list of list of historical data
+    
+    Return:
+    Created list
+    
+    """
     if histList[0][0][0] == "<":
         return [dict()]
 
@@ -54,6 +102,18 @@ def createHistoryDictList(histList):
 
 
 def getHistoricalData(stockName, startDate):
+    """
+    Gets historical data of the given stock name
+    from the given start date
+
+    Arguments:
+    stockName -- symbols representing stock name
+    startDate -- date to get historical data from
+    
+    Return:
+    Dictionary of historical data using the given values
+    
+    """
     stockName = stockName.upper()
     startDate = dateToString(startDate)
     endDate = dateToString(datetime.datetime.now())
@@ -103,6 +163,14 @@ def getStock(stockName, infoType):
     Gets the stock either from the database or from the web
     depending on how long it has been since the last database
     update for that stock
+
+    Arguments:
+    stockName -- symbols representing stock name
+    infoType -- type of information that is needed
+    
+    Return:
+    Dictionary of the requested data using the given values
+    
     """
     stockName = stockName.upper()
 
@@ -151,6 +219,10 @@ def getStock(stockName, infoType):
         return {infoType: infoDict[infoType]}
 
 def updateAllRealtime():
+    """
+    Updates all stock in the database.
+    
+    """
     for stockName in db.STOCK_MAP.keys():
         while REALTIME_IN_USE or HISTORICAL_IN_USE or FOLLOWING_IN_USE:
             pass
@@ -163,6 +235,10 @@ def updateAllRealtime():
     db.UPDATING_REALTIME = False
 
 def updateAllHistorical():
+    """
+    Updates historical data in the database
+    
+    """
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
         getTime() - daysToSeconds(5)
@@ -178,6 +254,8 @@ def updateAllHistorical():
         finally:
             db.MUTEX.release()
     db.UPDATING_HISTORICAL = False
+
+
 @app.route("/follow", methods = ["POST"])
 def followStock():
     global FOLLOWING_IN_USE
