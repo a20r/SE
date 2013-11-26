@@ -3,6 +3,7 @@ $(document).ready(function() {
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		fillData();
 		loadMainPage();
+		checkLogin();
 
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
@@ -14,6 +15,31 @@ var updateInterval = setInterval(fillData, updateTime)
 var currentPage = 0;
 var currentDataInUse;
 var allData;
+
+
+function checkLogin() {
+	var login = document.getElementById("logCond");
+	var cookie = document.cookie;
+	if (cookie.indexOf("stock_auth_token=") !== -1) {
+		var cookieValue = cookie.indexOf(cookie.indexOf("stock_auth_token="));
+		if (cookieValue !== -1) {
+			login.innerHTML = '<a href="javascript:logout();">LOGOUT</a>'
+		} else {
+			login.innerHTML = '<a href="/login.html">LOGIN</a>';
+		}
+	} else {
+		login.innerHTML = '<a href="/login.html">LOGIN</a>';
+	}
+}
+
+function hideFilter() {
+	var filter = document.getElementById("filterContainer");
+	if (filter.className != "HiddenClass") {
+		filter.className = "HiddenClass";
+	} else {
+		filter.className = "";
+	}
+}
 
 function fillData() {
 	allData = new Array();
