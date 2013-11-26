@@ -137,12 +137,16 @@ def getStock(stockName, infoType):
     else:
         return {infoType: infoDict[infoType]}
 
-@app.route("/get_stock/<stockName>/<infoType>", methods = ["GET"])
-def getRealtimeStock(stockName, infoType):
+@app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
+def giveRealtimeStock(stockName, infoType):
     return json.dumps(getStock(stockName, infoType))
 
-@app.route("/get_all_stocks/", methods = ["GET"])
-def getAllData():
+@app.route("/get_stocks/<stockName>", methods = ["GET"])
+def giveRealtimeStockAll(stockName):
+    return json.dumps(getStock(stockName, "all"))
+
+@app.route("/get_stocks", methods = ["GET"])
+def giveAllRealtimeData():
     return json.dumps(
         dict(
             (
@@ -152,8 +156,8 @@ def getAllData():
         )
     )
 
-@app.route("/get_historical_stocks/", methods = ["GET"])
-def getAllHistoricalData():
+@app.route("/get_historical_stocks", methods = ["GET"])
+def giveAllHistoricalData():
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
         getTime() - daysToSeconds(5)
@@ -166,6 +170,17 @@ def getAllHistoricalData():
                 getHistoricalData(stockName, fiveDaysAgo)
             ) for stockName in db.STOCK_MAP.keys()
         )
+    )
+
+@app.route("/get_historical_stocks/<stockName>", methods = ["GET"])
+def giveHistoricalData(stockName):
+    now = datetime.datetime.fromtimestamp(getTime())
+    fiveDaysAgo = datetime.datetime.fromtimestamp(
+        getTime() - daysToSeconds(5)
+    )
+
+    return json.dumps(
+        getHistoricalData(stockName, fiveDaysAgo)
     )
 
 @app.route("/get_stock_direct/<stockName>/<infoType>", methods = ["GET"])
