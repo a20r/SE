@@ -70,6 +70,40 @@ def getFollowing():
 
 @app.route("/unfollow", methods = ["POST"])
 def unfollow():
-    pass
+    conn = r.connect(
+        db = db.DB
+    )
+
+    stockName = request.form["stock_name"]
+    userData = r.table(db.USER_TABLE).get_all(
+        request.cookies.get(db.AUTH_COOKIE),
+        index = db.USER_SECONDARY_KEY
+    )[0].run(conn)
+
+    if userData:
+        if stockName in userData[db.STOCKS_FOLLOWING_KEY]:
+            indexOfStockName = userData[db.STOCKS_FOLLOWING_KEY].index(
+                stockName
+            )
+
+            del userData[db.STOCKS_FOLLOWING_KEY][indexOfStockName]
+            r.table(db.USER_TABLE).get(
+                userData["username"]
+            ).update(userData).run(conn)
+
+            return jsonify(
+                error = 0,
+                message = "No error"
+            )
+        else:
+            return jsonify(
+                error = 1,
+                message = "Not following that stock bro"
+            )
+    else:
+        return jsonify(
+            error = 1,
+            message = "I don't know dude"
+        )
 
 

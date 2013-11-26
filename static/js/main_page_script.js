@@ -5,6 +5,7 @@ $(document).ready(function() {
 		loadMainPage();
 		checkLogin();
 		loadRecommended();
+		checkFollowedButton();
 
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
@@ -18,6 +19,22 @@ function hideFilter() {
 	} else {
 		filter.className = "";
 	}
+}
+
+function checkFollowedButton() {
+	var button = document.getElementById("followedButton");
+	var loginCookie = $.cookie("stock_auth_token");
+	if (loginCookie == undefined || loginCookie.length <= 0) {
+		button.style.display = "none";
+		return;
+	}
+	$.getJSON("/get_following", function(jsonObj) {
+		if (jsonObj.length > 0) {
+			button.style.display = "";
+		} else {
+			button.style.display = "none";
+		}
+	});
 }
 
 function loadRecommended() {
@@ -43,15 +60,18 @@ function loadRecommended() {
 
 function checkLogin() {
 	var login = document.getElementById("logCond");
+	var test = document.getElementById('test');
 	var cookie = document.cookie;
 	if (cookie.indexOf("stock_auth_token=") !== -1) {
 		var cookieValue = cookie.indexOf(cookie.indexOf("stock_auth_token="));
 		if (cookieValue !== -1) {
 			login.innerHTML = '<a href="javascript:logout();">LOGOUT</a>'
 		} else {
+			test.innerHTML = "It could not find the stock auth token's value";
 			login.innerHTML = '<a href="/login.html">LOGIN</a>';
 		}
 	} else {
+		test.innerHTML = "It could not find the stock auth token";
 		login.innerHTML = '<a href="/login.html">LOGIN</a>';
 	}
 }

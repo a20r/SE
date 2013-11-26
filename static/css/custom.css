@@ -127,10 +127,46 @@ h2 {
   border-radius: 4px;
   font-weight: bold;
   height: 45px;
+  border:none;
 }
 .btn-primary:hover {
   border-color: #1abc9c;
   background-color: #1bdfb8;
+  border-radius: 4px;
+  height: 45px;
+}
+
+.btn-primary:focus {
+  border-color: #1abc9c;
+  background-color: #1bdfb8;
+  border-radius: 4px;
+  height: 45px;
+}
+
+.UnfollowButton {
+	float: left;
+	margin-left: 50px;
+	margin-top: 10px;
+	border-color: #d24444;
+  	background-color: #d24444;
+  	text-transform: uppercase;
+  	font-size: 10pt;
+  	border-radius: 4px;
+  	font-weight: bold;
+  	height: 45px;
+  	border: none;
+}
+
+.UnfollowButton:hover {
+  border-color: rgba(210, 68, 68, 0.8);
+  background-color: rgba(210, 68, 68, 0.8);
+  border-radius: 4px;
+  height: 45px;
+}
+
+.UnfollowButton:focus {
+  border-color: rgba(210, 68, 68, 0.8);
+  background-color: rgba(210, 68, 68, 0.8);
   border-radius: 4px;
   height: 45px;
 }

@@ -34,7 +34,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="/main_page.html">FTSE 1000 FEED</a></li>
-					<li><a href="/following.html">FOLLOW UPS</a></li>
+					<li id="followedButton"><a href="/following.html" >FOLLOWED</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li id="logCond"><a href="javascript:logout();">LOGOUT</a></li>
@@ -50,7 +50,8 @@
 			<h2 id="name">  </h2>
 		</div>
 		<div id="buttonFollow">
-			<button onclick="follow()" class="btn btn-lg btn-primary btn-block FollowButton" 
+			<button onclick="follow();" class="btn btn-lg btn-primary btn-block 
+			FollowButton" id="buttonFollowStyle"
 			style="width: 100px;"><i class="fa fa-plus-circle"></i> FOLLOW</button> 
 		</div>
 		<div class="Last">
