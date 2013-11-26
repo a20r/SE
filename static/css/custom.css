@@ -112,7 +112,7 @@ h5 {
 
 }
 hr {
-	border: 1px solid #8c9299;
+	border: 1px solid rgba(44,62,80,0.5);
 }
 h2 {
 	text-transform: uppercase;

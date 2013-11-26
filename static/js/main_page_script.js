@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 function fillData() {
 	allData = new Array();
-	$.getJSON("/get_all_stocks", function (jsonObj) {
+	$.getJSON("/get_stocks", function (jsonObj) {
 		console.log(jsonObj);
 		allData = new Array();
 		var index = 0;

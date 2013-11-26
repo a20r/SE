@@ -129,3 +129,106 @@
 #chart{
 	margin-top:20px;
 }
+
+.Title {
+	float:left;
+}
+
+.FollowButton {
+	float: left;
+	margin-left: 50px;
+	margin-top: 10px;
+}
+
+.CurrentPricePlaceholder {
+	width: 350px;
+	margin: auto;
+}
+
+.CurrentPriceLabel {
+	font-weight: 700;
+	color: rgba(44,62,80,0.5);
+	font-size: 14px;
+}
+
+#CurrentPrice {
+	font-size: 80px;
+	font-weight: 300;
+	color: #2c3e50;
+	float: left;
+	line-height: 80px;
+}
+
+#CurrentPriceArrow {
+	font-size: 48px;
+	line-height: 80px;
+	text-align: center;
+	float: left;
+	text-shadow: 0px 3px 0px #2e4052;
+	margin-left: 15px;
+}
+
+#HighestPrice {
+	font-size: 46px;
+	line-height: 46px;
+	color: #2c8372;
+	float: left;
+}
+
+#HighestPriceArrow {
+	font-size: 26px;
+	line-height: 46px;
+	text-align: center;
+	text-shadow: 0px 3px 0px #2e4052;
+	float: left;
+	margin-left: 15px;
+
+
+}
+
+.HighestPricePlaceholder {
+	border-right: 1px solid rgba(44,62,80,0.5);
+	float: left;
+	padding: 5px 20px 20px 20px;
+}
+
+#LowestPrice {
+	font-size: 46px;
+	line-height: 46px;
+	color: #d24444;
+	float: left;
+}
+
+#LowestPriceArrow {
+	font-size: 26px;
+	line-height: 46px;
+	text-align: center;
+	text-shadow: 0px 3px 0px #2e4052;
+	float: left;
+	margin-left: 15px;
+}
+
+.Font {
+	font-weight: 300;
+}
+
+#Change {
+	font-size: 46px;
+	line-height: 46px;
+	color: #2e4052;
+}
+
+.WithoutBorder.HighestPricePlaceholder {
+	border-right: none;
+}
+
+.BottomRowHolder {
+	width: 650px;
+	margin: auto;
+
+}
+
+.Line {
+	border-bottom: 1px solid rgba(44,62,80,0.5);
+	margin: 10px 0 15px 0;
+}
