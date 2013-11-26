@@ -10,6 +10,7 @@ $(document).ready(function() {
 function checkFollowedButton() {
 	var button = document.getElementById("buttonFollow");
 	var loginCookie = $.cookie("stock_auth_token");
+	alert(loginCookie)
 	if (loginCookie == undefined || loginCookie.length <= 0) {
 		button.style.display = "none";
 		console.log("No login cookie 1");
