@@ -11,6 +11,9 @@ $(document).ready(function() {
 
 var updateTime = 10 * 1000
 var updateInterval = setInterval(fillData, updateTime)
+var currentPage = 0;
+var currentDataInUse;
+var allData;
 
 function fillData() {
 	allData = new Array();
@@ -29,15 +32,21 @@ function fillData() {
 				index++;
 			}
 		}
-		currentDataInUse = allData;
-  		loadCurrentValues(allData, 0);
-  		loadPaging(allData.length);
+
+		if (currentDataInUse == undefined) {
+		    currentDataInUse = allData;
+		} else {
+		    for (var i = 0; i < currentDataInUse.length; i++) {
+		        var cData = jsonObj[currentDataInUse[i][0]];
+		        currentDataInUse[i][1] = Math.floor(cData["price"] * 100) / 100;
+		        currentDataInUse[i][2] = cData["change"];
+		    }
+        }
+
+        loadCurrentValues(currentDataInUse, currentPage);
+  		loadPaging(currentDataInUse.length);
 	});
 }
-
-var currentPage = 0;
-var currentDataInUse;
-var allData;
 
 function loadPaging(dataLength) {
 	var paging = document.getElementById("paging");
@@ -79,7 +88,7 @@ function filterCurrent(value) {
 		var symbol = allData[row][0].toLowerCase();
 		var name = allData[row][3].toLowerCase();
 		value = value.toLowerCase();
-		if (symbol.indexOf(value) !== -1 || 
+		if (symbol.indexOf(value) !== -1 ||
 			name.indexOf(value) !== -1) {
 			currentDataInUse[index] = allData[row];
 			index++;
