@@ -1,5 +1,6 @@
 
 $(document).ready(function() { 
+	checkLogin();
 	loadPage($.cookie("index"));
 });
 
@@ -31,5 +32,4 @@ function follow() {
         }
     });
 }
-
 
