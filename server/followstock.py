@@ -7,6 +7,7 @@ import json
 
 @app.route("/follow", methods = ["POST"])
 def followStock():
+    """ Add received stock to the database for the user's following stocks """
     conn = r.connect(
         db = db.DB
     )
@@ -51,6 +52,7 @@ def followStock():
 
 @app.route("/get_following", methods = ["GET"])
 def getFollowing():
+    """ Get stacks that user has in his database (follows) """
     conn = r.connect(
         db = db.DB
     )

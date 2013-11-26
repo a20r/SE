@@ -150,7 +150,6 @@ def getHistoricalData(stockName, startDate):
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
             infoDict = cachedData
 
-    # del infoDict["timestamp"]
     infoDict["name"] = db.STOCK_MAP[stockName]
     return infoDict
 
@@ -211,8 +210,6 @@ def getStock(stockName, infoType):
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
             infoDict = cachedData
 
-    # del infoDict["timestamp"]
-
     if infoType == "all":
         return infoDict
     else:
@@ -240,21 +237,33 @@ def updateAllHistorical():
     for stockName in db.STOCK_MAP.keys():
         try:
             getHistoricalData(stockName, fiveDaysAgo)
-        except IOError:
-            print "uh oh"
+        except IOError as e:
+            print "I/O error({0}): {1}".format(e.errno, e.strerror)
     db.UPDATING_HISTORICAL = False
 
 @app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
 def giveRealtimeStock(stockName, infoType):
+    """
+    Returns json for the requested stock information
+    
+    """
     return json.dumps(getStock(stockName, infoType))
 
 @app.route("/get_stocks/<stockName>", methods = ["GET"])
 def giveRealtimeStockAll(stockName):
+    """
+    Returns json for the requested stock
+    
+    """
     resp = json.dumps(getStock(stockName, "all"))
     return resp
 
 @app.route("/get_stocks", methods = ["GET"])
 def giveAllRealtimeData(stocksToGet = None):
+    """
+    Returns json for requested data - all real time data
+    
+    """
     if stocksToGet == None:
         stocksToGet = db.STOCK_MAP.keys()
     conn = r.connect(
@@ -278,6 +287,10 @@ def giveAllRealtimeData(stocksToGet = None):
 
 @app.route("/get_historical_stocks", methods = ["GET"])
 def giveAllHistoricalData(stocksToGet = None):
+    """
+    Returns json for requested data - all historical data
+   
+    """
     if stocksToGet == None:
         stocksToGet = db.STOCK_MAP.keys()
 
@@ -301,6 +314,11 @@ def giveAllHistoricalData(stocksToGet = None):
 
 @app.route("/get_historical_stocks/<stockName>", methods = ["GET"])
 def giveHistoricalData(stockName):
+    """
+    Returns json for the historical 
+    data for the requested stock
+    
+    """
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
         getTime() - daysToSeconds(5)
@@ -313,6 +331,10 @@ def giveHistoricalData(stockName):
 
 @app.route("/get_stock_direct/<stockName>/<infoType>", methods = ["GET"])
 def getStockDirect(stockName, infoType):
+    """
+    Returns json for requested stock directly from yahoo
+    
+    """
     stockName = stockName.upper()
     stock = yf.StockInfo(stockName)
     data = getattr(stock, infoType, None)()

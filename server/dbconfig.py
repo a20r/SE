@@ -5,32 +5,37 @@ HOST = "localhost"
 PORT = 28015
 DB = "finance"
 
+""" Table Names """
 CACHE_TABLE = "cache"
 USER_TABLE = "users"
 HISTORICAL_TABLE = "history"
 
+""" Primary keys """
 CACHE_PRIMARY_KEY = "index"
 HISTORICAL_PRIMARY_KEY = CACHE_PRIMARY_KEY
 USER_PRIMARY_KEY = "username"
 
+""" Secondary key """
 USER_SECONDARY_KEY = "token"
 
-# Shouldn't really be here but this is where my global vars live
+""" Intervals """
 # Shows the database update interval in seconds
 UPDATE_INTERVAL = 1 * 60
-
 HISTORICAL_INTERVAL = 60 * 60 * 24
 
+""" Authentication cookie """
 AUTH_COOKIE = "stock_auth_token"
 
 STOCKS_FOLLOWING_KEY = "stocks_following"
 HISTORY_LIST = "history_list"
 IN_LONDON = ".L"
 
+""" Thread protection """
 UPDATING_REALTIME = False
 UPDATING_HISTORICAL = False
 
 def init():
+    """ Initialise database """
     conn = r.connect()
     if not DB in r.db_list().run(conn):
         create(conn)
@@ -42,6 +47,7 @@ def init():
     )
 
 def create(conn):
+    """ Creates tables in the database """
     r.db_create(DB).run(conn)
 
     r.db(DB).table_create(
@@ -64,6 +70,7 @@ def create(conn):
     ).run(conn)
 
 def getStockNames(source = "static/data/key.csv"):
+    """ Return stock names as a dictionary """
     return dict(
         (
             line.split(",")[1].strip().upper(),
@@ -71,15 +78,6 @@ def getStockNames(source = "static/data/key.csv"):
         ) for line in open(source)
     )
 
-# because python is stupid
+""" Call to initialise database """
 CONN = init()
 STOCK_MAP = getStockNames()
-
-""" Test Functions """
-
-def test_init():
-    print init()
-
-if __name__ == "__main__":
-    test_initDB()
-
