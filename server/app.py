@@ -11,8 +11,8 @@ from financecache import *
 from pageserver import *
 from followstock import *
 
-giveAllRealtimeData()
-giveAllHistoricalData()
+updateAllRealtime()
+updateAllHistorical()
 
 def run(host, port):
     app.run(
