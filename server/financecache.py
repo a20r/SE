@@ -185,7 +185,9 @@ def giveRealtimeStockAll(stockName):
     return json.dumps(getStock(stockName, "all"))
 
 @app.route("/get_stocks", methods = ["GET"])
-def giveAllRealtimeData():
+def giveAllRealtimeData(stocksToGet = None):
+    if stocksToGet == None:
+        stocksToGet = db.STOCK_MAP.keys()
     global REALTIME_IN_USE
     updateThread = threading.Thread(
         target = updateAllRealtime
@@ -195,7 +197,7 @@ def giveAllRealtimeData():
     REALTIME_IN_USE = True
     db.MUTEX.acquire()
     try:
-        for stockName in db.STOCK_MAP.keys():
+        for stockName in stocksToGet:
             stockData[stockName] = r.table(db.CACHE_TABLE).get(
                 stockName
             ).run(db.CONN)

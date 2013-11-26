@@ -4,6 +4,7 @@ from flask import request, render_template, jsonify, make_response
 import rethinkdb as r
 import dbconfig as db
 from app import app
+import financecache as fc
 
 @app.route("/follow", methods = ["POST"])
 def followStock():
@@ -45,5 +46,21 @@ def followStock():
 
         resp.set_cookie(db.AUTH_COOKIE, "")
         return resp
+
+@app.route("/get_following", methods = ["GET"])
+def getFollowing():
+    userDataList = r.table(db.USER_TABLE).get_all(
+        request.cookies.get(db.AUTH_COOKIE),
+        index = db.USER_SECONDARY_KEY
+    ).run(db.CONN)
+
+    if len(userDataList) > 0:
+        userData = userDataList[0]
+        return fc.giveAllRealtimeData(userData[db.STOCKS_FOLLOWING_KEY])
+    else:
+        return jsonify(
+            error = 1,
+            message = "User not yet created"
+        )
 
 
