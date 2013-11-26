@@ -72,6 +72,7 @@ def getHistoricalData(stockName, startDate):
         histList = stock.historical_prices(startDate, endDate)
         infoDict["history_list"] = createHistoryDictList(histList)
         infoDict["index"] = stockName
+        infoDict["name"] = db.STOCK_MAP[stockName]
         infoDict["timestamp"] = getTime()
         r.table(db.HISTORICAL_TABLE).insert(infoDict).run(db.CONN)
     else:
@@ -79,7 +80,6 @@ def getHistoricalData(stockName, startDate):
             getTime() -
             cachedData["timestamp"]
         )
-        print elapsedTime
         if elapsedTime > db.HISTORICAL_INTERVAL:
             print "\n-- DB -- " + stockName + "  == Updating Database ==\n"
             histList = stock.historical_prices(startDate, endDate)
