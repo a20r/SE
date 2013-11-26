@@ -11,6 +11,15 @@ $(document).ready(function() {
 	}
 })
 
+function hideFilter() {
+	var filter = document.getElementById("filterContainer");
+	if (filter.className != "HiddenClass") {
+		filter.className = "HiddenClass";
+	} else {
+		filter.className = "";
+	}
+}
+
 function loadRecommended() {
 	var recommended = document.getElementById("recommended");
 	var html = '';
