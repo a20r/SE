@@ -5,6 +5,7 @@ $(document).ready(function() {
 		loadMainPage();
 		checkLogin();
 		loadRecommended();
+		checkFollowedButton();
 
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
@@ -18,6 +19,22 @@ function hideFilter() {
 	} else {
 		filter.className = "";
 	}
+}
+
+function checkFollowedButton() {
+	var button = document.getElementById("followedButton");
+	var loginCookie = $.cookie("stock_auth_token");
+	if (loginCookie == undefined || loginCookie.length <= 0) {
+		button.style.display = "none";
+		return;
+	}
+	$.getJSON("/get_following", function(jsonObj) {
+		if (jsonObj.length > 0) {
+			button.style.display = "";
+		} else {
+			button.style.display = "none";
+		}
+	});
 }
 
 function loadRecommended() {
