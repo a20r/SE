@@ -136,7 +136,7 @@ def getStock(stockName, infoType):
                 r.table(db.CACHE_TABLE).get(stockName).update(
                     infoDict
                 ).run(db.CONN)
-            except OverflowError, DecodeError:
+            except:
                 pass
         else:
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"

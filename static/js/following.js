@@ -17,35 +17,37 @@ var allData;
 
 function fillData() {
 	allData = new Array();
-	$.getJSON("/get_following/", function (jsonObj) {
-	    $.getJSON("/get_stocks", function (stockObj) {
-		console.log(jsonObj);
-		allData = new Array();
-		var index = 0;
-		var keys = Object.keys(jsonObj);
-		for (var key in jsonObj) {
-			if (jsonObj.hasOwnProperty(key)) {
-				allData[index] = new Array();
-				allData[index][0] = key;
-				allData[index][1] = Math.floor(jsonObj[key]["price"] * 100) / 100;
-				allData[index][2] = jsonObj[key]["change"];
-				allData[index][3] = jsonObj[key]["name"];
-				index++;
-			}
-		}
+	$.getJSON("/get_following", function (followList) {
+	    $.getJSON("/get_stocks", function (jsonObj) {
+            //console.log(jsonObj);
+            allData = new Array();
+            var index = 0;
+            for (var key in followList) {
+                key = followList[key];
+                if (jsonObj.hasOwnProperty(key)) {
+                    allData[index] = new Array();
+                    allData[index][0] = key;
+                    allData[index][1] = Math.floor(jsonObj[key]["price"] * 100) / 100;
+                    allData[index][2] = jsonObj[key]["change"];
+                    allData[index][3] = jsonObj[key]["name"];
+                    index++;
+                }
+            }
 
-		if (currentDataInUse == undefined) {
-		    currentDataInUse = allData;
-		} else {
-		    for (var i = 0; i < currentDataInUse.length; i++) {
-		        var cData = jsonObj[currentDataInUse[i][0]];
-		        currentDataInUse[i][1] = Math.floor(cData["price"] * 100) / 100;
-		        currentDataInUse[i][2] = cData["change"];
-		    }
-        }
+            console.log(allData)
+            if (currentDataInUse == undefined) {
+                currentDataInUse = allData;
+            } else {
+                for (var i = 0; i < currentDataInUse.length; i++) {
+                    var cData = jsonObj[currentDataInUse[i][0]];
+                    currentDataInUse[i][1] = Math.floor(cData["price"] * 100) / 100;
+                    currentDataInUse[i][2] = cData["change"];
+                }
+            }
 
-        loadCurrentValues(currentDataInUse, currentPage);
-  		loadPaging(currentDataInUse.length);
+            loadCurrentValues(currentDataInUse, currentPage);
+            loadPaging(currentDataInUse.length);
+        });
 	});
 }
 
@@ -145,24 +147,35 @@ function loadCurrentValues(data, start) {
 
 function loadMainPage() {
 	var stocksTable = document.getElementById("stocks");
-	$.getJSON("/get_following/historical", function (jsonObj) {
-		console.log(jsonObj);
-		for (var key in jsonObj) {
-			if (jsonObj.hasOwnProperty(key)) {
-				var history = jsonObj[key]["history_list"];
-				if (history.length > 1) {
-					var item = history[0];
-					console.log(item);
-					var name = jsonObj[key]["name"];
-					var change = history[0]["Close"] / history[1]["Close"] * 100 - 100;
-					change = Math.round(change * 100) / 100;
-					addRow(name, jsonObj[key]["index"], change, history[0]["Open"], 
-						history[0]["High"], history[0]["Low"], history[0]["Close"],
-						history[0]["Volume"]);
-				}
-			}
-		}
-	});
+	$.getJSON("/get_following", function (followList) {
+	    $.getJSON("/get_historical_stocks", function (jsonObj) {
+            console.log(jsonObj);
+            for (var key in jsonObj) {
+                console.log(followList);
+                console.log(jsonObj[key]["index"]);
+                var insertBool = false;
+                for (i in followList) {
+                    if (followList[i] == jsonObj[key]["index"]) {
+                        insertBool = true;
+                    }
+                }
+                if (insertBool) {
+                    //alert("here")
+                    var history = jsonObj[key]["history_list"];
+                    if (history.length > 1) {
+                        var item = history[0];
+                        console.log(item);
+                        var name = jsonObj[key]["name"];
+                        var change = history[0]["Close"] / history[1]["Close"] * 100 - 100;
+                        change = Math.round(change * 100) / 100;
+                        addRow(name, jsonObj[key]["index"], change, history[0]["Open"], 
+                            history[0]["High"], history[0]["Low"], history[0]["Close"],
+                            history[0]["Volume"]);
+                    }
+                }
+            }
+        });
+    });
 }
 
 function addRow(name, symbol, change, open, high, low, close, volume) {
