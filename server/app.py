@@ -16,13 +16,5 @@ from recommendation import *
 #updateAllHistorical()
 
 def run(host, port):
-	"""
-    Runs the server
-    
-    """
-    app.run(
-        host = host,
-        port = int(port),
-        debug = True
-    )
+    app.run(host = host, port = int(port), debug = True)
 

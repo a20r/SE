@@ -245,7 +245,7 @@ def updateAllHistorical():
 def giveRealtimeStock(stockName, infoType):
     """
     Returns json for the requested stock information
-    
+
     """
     return json.dumps(getStock(stockName, infoType))
 
@@ -253,7 +253,7 @@ def giveRealtimeStock(stockName, infoType):
 def giveRealtimeStockAll(stockName):
     """
     Returns json for the requested stock
-    
+
     """
     resp = json.dumps(getStock(stockName, "all"))
     return resp
@@ -262,7 +262,7 @@ def giveRealtimeStockAll(stockName):
 def giveAllRealtimeData(stocksToGet = None):
     """
     Returns json for requested data - all real time data
-    
+
     """
     if stocksToGet == None:
         stocksToGet = db.STOCK_MAP.keys()
@@ -289,7 +289,7 @@ def giveAllRealtimeData(stocksToGet = None):
 def giveAllHistoricalData(stocksToGet = None):
     """
     Returns json for requested data - all historical data
-   
+
     """
     if stocksToGet == None:
         stocksToGet = db.STOCK_MAP.keys()
@@ -315,9 +315,9 @@ def giveAllHistoricalData(stocksToGet = None):
 @app.route("/get_historical_stocks/<stockName>", methods = ["GET"])
 def giveHistoricalData(stockName):
     """
-    Returns json for the historical 
+    Returns json for the historical
     data for the requested stock
-    
+
     """
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
@@ -333,7 +333,7 @@ def giveHistoricalData(stockName):
 def getStockDirect(stockName, infoType):
     """
     Returns json for requested stock directly from yahoo
-    
+
     """
     stockName = stockName.upper()
     stock = yf.StockInfo(stockName)
