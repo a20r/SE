@@ -7,6 +7,9 @@ from app import app, db
 import datetime, time
 import threading
 
+REALTIME_IN_USE = False
+HISTORICAL_IN_USE = False
+
 def getTime(toConvert = None):
     if toConvert == None:
         return time.mktime(
@@ -76,7 +79,7 @@ def getHistoricalData(stockName, startDate):
             getTime() -
             cachedData["timestamp"]
         )
-
+        print elapsedTime
         if elapsedTime > db.HISTORICAL_INTERVAL:
             print "\n-- DB -- " + stockName + "  == Updating Database ==\n"
             histList = stock.historical_prices(startDate, endDate)
@@ -90,7 +93,7 @@ def getHistoricalData(stockName, startDate):
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
             infoDict = cachedData
 
-    del infoDict["timestamp"]
+    # del infoDict["timestamp"]
     infoDict["name"] = db.STOCK_MAP[stockName]
     return infoDict
 
@@ -100,7 +103,6 @@ def getStock(stockName, infoType):
     depending on how long it has been since the last database
     update for that stock
     """
-
     stockName = stockName.upper()
 
     if not stockName in db.STOCK_MAP.keys():
@@ -129,14 +131,17 @@ def getStock(stockName, infoType):
             infoDict = stock.all()
             infoDict["index"] = stockName
             infoDict["timestamp"] = getTime()
-            r.table(db.CACHE_TABLE).get(stockName).update(
-                infoDict
-            ).run(db.CONN)
+            try:
+                r.table(db.CACHE_TABLE).get(stockName).update(
+                    infoDict
+                ).run(db.CONN)
+            except OverflowError, DecodeError:
+                pass
         else:
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
             infoDict = cachedData
 
-    del infoDict["timestamp"]
+    # del infoDict["timestamp"]
     infoDict["name"] = db.STOCK_MAP[stockName]
 
     if infoType == "all":
@@ -146,7 +151,13 @@ def getStock(stockName, infoType):
 
 def updateAllRealtime():
     for stockName in db.STOCK_MAP.keys():
-        getStock(stockName, "all")
+        while REALTIME_IN_USE or HISTORICAL_IN_USE:
+            pass
+        try:
+            db.MUTEX.acquire()
+            getStock(stockName, "all")
+        finally:
+            db.MUTEX.release()
 
 def updateAllHistorical():
     now = datetime.datetime.fromtimestamp(getTime())
@@ -155,10 +166,15 @@ def updateAllHistorical():
     )
 
     for stockName in db.STOCK_MAP.keys():
+        while HISTORICAL_IN_USE or REALTIME_IN_USE:
+            pass
         try:
+            db.MUTEX.acquire()
             getHistoricalData(stockName, fiveDaysAgo)
         except IOError:
             print "uh oh"
+        finally:
+            db.MUTEX.release()
 
 @app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
 def giveRealtimeStock(stockName, infoType):
@@ -170,33 +186,51 @@ def giveRealtimeStockAll(stockName):
 
 @app.route("/get_stocks", methods = ["GET"])
 def giveAllRealtimeData():
-
+    global REALTIME_IN_USE
     updateThread = threading.Thread(
         target = updateAllRealtime
     )
 
     stockData = dict()
-    for stockName in db.STOCK_MAP.keys():
-        stockData[stockName] = r.table(db.CACHE_TABLE).get(
-            stockName
-        ).run(db.CONN)
+    REALTIME_IN_USE = True
+    db.MUTEX.acquire()
+    try:
+        for stockName in db.STOCK_MAP.keys():
+            stockData[stockName] = r.table(db.CACHE_TABLE).get(
+                stockName
+            ).run(db.CONN)
+    finally:
+        db.MUTEX.release()
+    REALTIME_IN_USE = False
+    if not db.UPDATING_REALTIME:
+        db.UPDATING_REALTIME = True
+        updateThread.start()
+        db.UPDATING_REALTIME = False
 
-    updateThread.start()
     return json.dumps(stockData)
 
 @app.route("/get_historical_stocks", methods = ["GET"])
 def giveAllHistoricalData():
-
+    global HISTORICAL_IN_USE
     updateThread = threading.Thread(
         target = updateAllHistorical
     )
 
-    historicalData = [
-        r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
-        for stockName in db.STOCK_MAP.keys()
-    ]
+    HISTORICAL_IN_USE = True
+    db.MUTEX.acquire()
+    try:
+        historicalData = [
+            r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
+            for stockName in db.STOCK_MAP.keys()
+        ]
+    finally:
+        db.MUTEX.release()
+    HISTORICAL_IN_USE = False
 
-    updateThread.start()
+    if not db.UPDATING_HISTORICAL:
+        db.UPDATING_HISTORICAL = True
+        updateThread.start()
+        db.UPDATING_HISTORICAL = False
 
     return json.dumps(historicalData)
 

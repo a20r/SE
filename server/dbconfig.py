@@ -1,5 +1,6 @@
 
 import rethinkdb as r
+from threading import Lock
 
 HOST = "localhost"
 PORT = 28015
@@ -17,7 +18,7 @@ USER_SECONDARY_KEY = "token"
 
 # Shouldn't really be here but this is where my global vars live
 # Shows the database update interval in seconds
-UPDATE_INTERVAL = 20 * 60
+UPDATE_INTERVAL = 1 * 60
 
 HISTORICAL_INTERVAL = 60 * 60 * 24
 
@@ -26,6 +27,11 @@ AUTH_COOKIE = "stock_auth_token"
 STOCKS_FOLLOWING_KEY = "stocks_following"
 HISTORY_LIST = "history_list"
 IN_LONDON = ".L"
+
+UPDATING_REALTIME = False
+UPDATING_HISTORICAL = False
+
+MUTEX = Lock()
 
 def init():
     conn = r.connect()
