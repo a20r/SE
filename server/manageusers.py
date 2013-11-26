@@ -3,9 +3,8 @@ from contextlib import closing
 from flask import request, session, g, redirect, url_for
 from flask import abort, render_template, flash, jsonify, make_response
 import rethinkdb as r
-import dbconfig as db
 import uuid
-from app import app
+from app import app, db
 
 @app.route('/login', methods=["POST"])
 def login():
