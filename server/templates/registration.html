@@ -5,43 +5,45 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script src="/js/validate.js"></script>
+  <script src="validate.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/custom.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/login.css" rel="stylesheet">
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <form class="form-register" id="form" role="form">
-            <h2 class="form-signin-heading">Enter your details</h2>
-             <div id="alert_msg" class="alert alert-danger" style="display: none;">
-                <button type="button" class="close" onClick="warning_closed()" data-dismiss="alert">&times;</button>
-                <strong>Error!</strong><span id="alert_html"></span>
-             </div>
-            <div class="input-group margin-bottom-sm">
-                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                <input class="form-control" type="text" id="user" placeholder="Username" required>
-            </div>
-            <div class="input-group margin-bottom-sm">
-                <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                <input class="form-control" type="email" id="email" placeholder="Email address" validateEmail() required>
-            </div>
-            <div class="input-group margin-bottom-sm">
-                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                <input class="form-control" type="password" id="password1" placeholder="Password" onchange="validatePassword()" required>
-            </div>
-            <div class="input-group margin-bottom-sm">
-                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                <input class="form-control" type="password" id="password2" placeholder="Repeat Password" onchange="validatePassword()" required>
-            </div>
-            <button class="btn btn-lg btn-info btn-block" type="submit">Create account</button>
-        </form>
-    </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/js/bootstrap.min.js"></script>
+  <div class="container">
+    <form class="form-signin" action="/register" method="post">
+      <div class="well">
+        <h2 class="form-signin-heading">Register</h2>
+        <!-- <p id="error"></p> -->
+        <label for="username">Username</label>
+        <input class="form-control" type="text" name="username" required autofocus>
+        <label for="email">E-mail </label>
+        <input class="form-control" type="text" name="email" required>
+        <label for="password">Password</label>
+        <input class="form-control" type="password" name="password" required>
+        <label for="password1">Retype Password</label>
+        <input class="form-control" type="password" name="password1" required>
+
+        <!-- <div class="row" >
+          <div class="col-xs-12">
+            <div class="alert alert-danger text-center">Wrong username or password</div>
+          </div>
+        </div> -->
+        <div class="row">
+          <div class="col-xs-6" style="padding-right: 0px;">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+          </div>
+        </div>
+        <!-- <a href="registration.html" class="btn btn-lg btn-info btn-block" type="submit">Create new account</a> -->
+      </div>
+    </form>
+  </div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
