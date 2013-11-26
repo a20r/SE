@@ -73,7 +73,6 @@ def unfollow():
     )
 
     stockName = request.form["stock_name"]
-
     userData = r.table(db.USER_TABLE).get_all(
         request.cookies.get(db.AUTH_COOKIE),
         index = db.USER_SECONDARY_KEY
