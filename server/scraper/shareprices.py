@@ -12,5 +12,10 @@ def scrape():
     for row in rows:
         data = row.td
         if str(data.string) != "Epic":
-            indexes.append(str(data.string))
+            index = str(data.string)
+            #remove dot from the end of string
+            if index[-1] != '.':
+                indexes.append(index)
+            else: 
+                indexes.append(index[:-1])
     return indexes

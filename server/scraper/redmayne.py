@@ -14,5 +14,10 @@ def scrape():
         if data != None:
             href = data.a['href']
             i = href.find('=')+1
-            indexes.append(str(href[i:]))
+            index = str(href[i:])
+            #remove dot from the end of string
+            if index[-1] != '.':
+                indexes.append(index)
+            else: 
+                indexes.append(index[:-1])
     return indexes
