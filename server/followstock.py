@@ -53,7 +53,7 @@ def getFollowing():
     )[0].run(db.CONN)
 
     if userData:
-        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY]))
+        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY])
     else:
         return json.dumps(list())
 

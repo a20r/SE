@@ -1,5 +1,6 @@
 import scraper
 from app import app
+from flask import jsonify
 
 @app.route("/recommend", methods = ["GET"])
 def getRecommendations():
