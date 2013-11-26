@@ -13,7 +13,7 @@ from followstock import *
 from recommendation import *
 
 #updateAllRealtime()
-#updateAllHistorical()
+updateAllHistorical()
 
 def run(host, port):
     app.run(host = host, port = int(port), debug = True)
