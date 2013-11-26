@@ -88,3 +88,63 @@
 2013-11-26T18:06:26.270150920 0.030679s info: Server ready
 2013-11-26T18:06:26.270974640 0.031503s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/28de5a0a-92e5-4117-846e-da6006d740eb" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
 2013-11-26T18:06:26.270991280 0.031519s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/fab9f769-83fe-4b13-a2d3-9b3c01540078" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:41:01.720941800 12875.481470s info: Server got SIGINT; shutting down...
+2013-11-26T21:41:01.721359040 12875.481887s info: Shutting down client connections...
+2013-11-26T21:41:01.721456360 12875.481984s info: All client connections closed.
+2013-11-26T21:41:01.721459360 12875.481987s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2013-11-26T21:41:01.726055640 12875.486584s info: Storage engine shut down.
+2013-11-26T21:41:07.414424120 0.008367s info: Running rethinkdb 1.10.1-0ubuntu1~raring (GCC 4.7.3)...
+2013-11-26T21:41:07.420283000 0.014226s info: Running on Linux 3.8.0-33-generic i686
+2013-11-26T21:41:07.420571080 0.014513s info: Loading data from directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-26T21:41:07.424382360 0.018325s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:41:07.431731960 0.025675s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/auth_metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:41:07.439020000 0.032963s info: Listening for intracluster connections on port 29015
+2013-11-26T21:41:07.443068360 0.037011s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/94fab3db-da78-4939-a118-f89d15d4ab42" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:41:07.443431840 0.037374s info: Listening for client driver connections on port 28015
+2013-11-26T21:41:07.443477880 0.037420s info: Listening for administrative HTTP connections on port 8080
+2013-11-26T21:41:07.443480760 0.037423s info: Listening on addresses: 127.0.0.1, 127.0.1.1
+2013-11-26T21:41:07.443483640 0.037426s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-26T21:41:07.443486440 0.037428s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-26T21:41:07.443489080 0.037431s info: Server ready
+2013-11-26T21:41:07.444534280 0.038477s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/28de5a0a-92e5-4117-846e-da6006d740eb" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:41:07.444545800 0.038488s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/fab9f769-83fe-4b13-a2d3-9b3c01540078" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:42:25.250514000 77.844457s info: Server got SIGINT; shutting down...
+2013-11-26T21:42:25.251076640 77.845019s info: Shutting down client connections...
+2013-11-26T21:42:25.251372560 77.845315s info: All client connections closed.
+2013-11-26T21:42:25.251596120 77.845539s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2013-11-26T21:42:25.256446480 77.850389s info: Storage engine shut down.
+2013-11-26T21:42:26.320915160 0.005596s info: Running rethinkdb 1.10.1-0ubuntu1~raring (GCC 4.7.3)...
+2013-11-26T21:42:26.325819760 0.010501s info: Running on Linux 3.8.0-33-generic i686
+2013-11-26T21:42:26.326118720 0.010799s info: Loading data from directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-26T21:42:26.329936280 0.014617s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:42:26.335996480 0.020677s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/auth_metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:42:26.343014360 0.027695s info: Listening for intracluster connections on port 29015
+2013-11-26T21:42:26.346293000 0.030974s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/94fab3db-da78-4939-a118-f89d15d4ab42" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:42:26.347399680 0.032081s info: Listening for client driver connections on port 28015
+2013-11-26T21:42:26.347452520 0.032133s info: Listening for administrative HTTP connections on port 8080
+2013-11-26T21:42:26.347455200 0.032135s info: Listening on addresses: 127.0.0.1, 127.0.1.1
+2013-11-26T21:42:26.347457680 0.032138s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-26T21:42:26.347460280 0.032140s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-26T21:42:26.347462920 0.032143s info: Server ready
+2013-11-26T21:42:26.347733360 0.032414s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/28de5a0a-92e5-4117-846e-da6006d740eb" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:42:26.347819080 0.032500s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/fab9f769-83fe-4b13-a2d3-9b3c01540078" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:46:41.961304120 255.645985s info: Server got SIGINT; shutting down...
+2013-11-26T21:46:41.961668680 255.646349s info: Shutting down client connections...
+2013-11-26T21:46:41.961907760 255.646588s info: All client connections closed.
+2013-11-26T21:46:41.962043760 255.646724s info: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2013-11-26T21:46:41.966289520 255.650970s info: Storage engine shut down.
+2013-11-26T21:46:46.657193440 0.004960s info: Running rethinkdb 1.10.1-0ubuntu1~raring (GCC 4.7.3)...
+2013-11-26T21:46:46.660805640 0.008572s info: Running on Linux 3.8.0-33-generic i686
+2013-11-26T21:46:46.661113880 0.008880s info: Loading data from directory /home/kamile/Projects/SE/database/rethinkdb_data
+2013-11-26T21:46:46.665168440 0.012935s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:46:46.676522800 0.024289s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/auth_metadata" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:46:46.685730080 0.033496s info: Listening for intracluster connections on port 29015
+2013-11-26T21:46:46.687472280 0.035239s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/94fab3db-da78-4939-a118-f89d15d4ab42" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:46:46.689092720 0.036859s info: Listening for client driver connections on port 28015
+2013-11-26T21:46:46.689140920 0.036907s info: Listening for administrative HTTP connections on port 8080
+2013-11-26T21:46:46.689143720 0.036910s info: Listening on addresses: 127.0.0.1, 127.0.1.1
+2013-11-26T21:46:46.689146120 0.036912s info: To fully expose RethinkDB on the network, bind to all addresses
+2013-11-26T21:46:46.689148600 0.036914s info: by running rethinkdb with the `--bind all` command line option.
+2013-11-26T21:46:46.689151000 0.036917s info: Server ready
+2013-11-26T21:46:46.690475480 0.038242s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/28de5a0a-92e5-4117-846e-da6006d740eb" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.
+2013-11-26T21:46:46.690513480 0.038279s warn: Could not turn off filesystem caching for database file: "/home/kamile/Projects/SE/database/rethinkdb_data/fab9f769-83fe-4b13-a2d3-9b3c01540078" (Is the file located on a filesystem that doesn't support direct I/O (e.g. some encrypted or journaled file systems)?) This can cause performance problems.

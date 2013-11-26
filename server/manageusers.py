@@ -8,6 +8,7 @@ from app import app, db
 
 @app.route('/login', methods=["POST"])
 def login():
+    """ Logs user into the system """
     userData = r.table(db.USER_TABLE).get(
         request.form["username"]
     ).run(db.CONN)
@@ -55,6 +56,7 @@ def login():
 
 @app.route('/register', methods=["POST"])
 def register():
+    """ Creates new user """
     userData = r.table(db.USER_TABLE).get(
         request.form["username"]
     ).run(db.CONN)
@@ -93,6 +95,7 @@ def register():
 
 @app.route('/logout', methods = ["POST"])
 def logout():
+    """ Logs user out of the system """
     userData = r.table(db.USER_TABLE).get_all(
         request.cookies.get(db.AUTH_COOKIE),
         index = db.USER_SECONDARY_KEY
@@ -115,4 +118,3 @@ def logout():
 
         resp.set_cookie(db.AUTH_COOKIE, "")
         return resp
-
