@@ -1,6 +1,5 @@
 
 import rethinkdb as r
-from threading import Lock
 
 HOST = "localhost"
 PORT = 28015
@@ -30,8 +29,6 @@ IN_LONDON = ".L"
 
 UPDATING_REALTIME = False
 UPDATING_HISTORICAL = False
-
-MUTEX = Lock()
 
 def init():
     conn = r.connect()

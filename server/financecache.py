@@ -7,10 +7,6 @@ from app import app, db
 import datetime, time
 import threading
 
-REALTIME_IN_USE = False
-HISTORICAL_IN_USE = False
-FOLLOWING_IN_USE = False
-
 def getTime(toConvert = None):
     """
     Get current time in seconds or convert
@@ -114,6 +110,7 @@ def getHistoricalData(stockName, startDate):
     Dictionary of historical data using the given values
     
     """
+    conn = r.connect(db = db.DB)
     stockName = stockName.upper()
     startDate = dateToString(startDate)
     endDate = dateToString(datetime.datetime.now())
@@ -125,7 +122,7 @@ def getHistoricalData(stockName, startDate):
         )
 
     stock = yf.StockInfo(stockName + db.IN_LONDON)
-    cachedData = r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
+    cachedData = r.table(db.HISTORICAL_TABLE).get(stockName).run(conn)
     infoDict = dict()
 
     if cachedData == None:
@@ -135,7 +132,7 @@ def getHistoricalData(stockName, startDate):
         infoDict["index"] = stockName
         infoDict["name"] = db.STOCK_MAP[stockName]
         infoDict["timestamp"] = getTime()
-        r.table(db.HISTORICAL_TABLE).insert(infoDict).run(db.CONN)
+        r.table(db.HISTORICAL_TABLE).insert(infoDict).run(conn)
     else:
         elapsedTime = (
             getTime() -
@@ -149,7 +146,7 @@ def getHistoricalData(stockName, startDate):
             infoDict["timestamp"] = getTime()
             r.table(db.HISTORICAL_TABLE).get(stockName).update(
                 infoDict
-            ).run(db.CONN)
+            ).run(conn)
         else:
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
             infoDict = cachedData
@@ -174,6 +171,10 @@ def getStock(stockName, infoType):
     """
     stockName = stockName.upper()
 
+    conn = r.connect(
+        db = db.DB
+    )
+
     if not stockName in db.STOCK_MAP.keys():
         return dict(
             error = 1,
@@ -181,7 +182,7 @@ def getStock(stockName, infoType):
         )
 
     stock = yf.StockInfo(stockName + db.IN_LONDON)
-    cachedData = r.table(db.CACHE_TABLE).get(stockName).run(db.CONN)
+    cachedData = r.table(db.CACHE_TABLE).get(stockName).run(conn)
     infoDict = dict()
 
     if cachedData == None:
@@ -190,7 +191,7 @@ def getStock(stockName, infoType):
         infoDict["index"] = stockName
         infoDict["timestamp"] = getTime()
         infoDict["name"] = db.STOCK_MAP[stockName]
-        r.table(db.CACHE_TABLE).insert(infoDict).run(db.CONN)
+        r.table(db.CACHE_TABLE).insert(infoDict).run(conn)
     else:
         elapsedTime = (
             getTime() -
@@ -204,7 +205,7 @@ def getStock(stockName, infoType):
             try:
                 r.table(db.CACHE_TABLE).get(stockName).update(
                     infoDict
-                ).run(db.CONN)
+                ).run(conn)
             except:
                 pass
         else:
@@ -224,13 +225,7 @@ def updateAllRealtime():
     
     """
     for stockName in db.STOCK_MAP.keys():
-        while REALTIME_IN_USE or HISTORICAL_IN_USE or FOLLOWING_IN_USE:
-            pass
-        try:
-            db.MUTEX.acquire()
-            getStock(stockName, "all")
-        finally:
-            db.MUTEX.release()
+        getStock(stockName, "all")
 
     db.UPDATING_REALTIME = False
 
@@ -244,95 +239,11 @@ def updateAllHistorical():
         getTime() - daysToSeconds(5)
     )
     for stockName in db.STOCK_MAP.keys():
-        while HISTORICAL_IN_USE or REALTIME_IN_USE or FOLLOWING_IN_USE:
-            pass
         try:
-            db.MUTEX.acquire()
             getHistoricalData(stockName, fiveDaysAgo)
         except IOError:
             print "uh oh"
-        finally:
-            db.MUTEX.release()
     db.UPDATING_HISTORICAL = False
-
-
-@app.route("/follow", methods = ["POST"])
-def followStock():
-    global FOLLOWING_IN_USE
-
-    FOLLOWING_IN_USE = True
-
-    db.MUTEX.acquire()
-
-    try:
-        userData = r.table(db.USER_TABLE).get_all(
-            request.cookies.get(db.AUTH_COOKIE),
-            index = db.USER_SECONDARY_KEY
-        )[0].run(db.CONN)
-    finally:
-        db.MUTEX.release()
-
-    FOLLOWING_IN_USE = False
-    if userData:
-        stockName = request.form["stock_name"]
-        if not stockName in db.STOCK_MAP.keys():
-            return jsonify(
-                error = 1,
-                message = "Cannot follow an imaginary stock"
-            )
-
-        if not stockName in userData[db.STOCKS_FOLLOWING_KEY]:
-            userData[db.STOCKS_FOLLOWING_KEY].append(stockName)
-            FOLLOWING_IN_USE = True
-            try:
-                db.MUTEX.acquire()
-                r.table(db.USER_TABLE).get(userData["username"]).update(
-                    userData
-                ).run(db.CONN)
-            finally:
-                db.MUTEX.release()
-
-            FOLLOWING_IN_USE = False
-            return jsonify(
-                error = 0,
-                message = "No error"
-            )
-        else:
-            return jsonify(
-                error = 1,
-                message = "User is already following that stock"
-            )
-    else:
-        resp = make_response(
-            jsonify(
-                error = 1,
-                message = "User with associated token does not exist"
-            )
-        )
-
-        resp.set_cookie(db.AUTH_COOKIE, "")
-        return resp
-
-@app.route("/get_following", methods = ["GET"])
-def getFollowing():
-    global FOLLOWING_IN_USE
-
-    FOLLOWING_IN_USE = True
-    try:
-        db.MUTEX.acquire()
-        userData = r.table(db.USER_TABLE).get_all(
-            request.cookies.get(db.AUTH_COOKIE),
-            index = db.USER_SECONDARY_KEY
-        )[0].run(db.CONN)
-    finally:
-        db.MUTEX.release()
-    FOLLOWING_IN_USE = False
-
-    print userData
-    if userData:
-        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY])
-    else:
-        return json.dumps(list())
 
 @app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
 def giveRealtimeStock(stockName, infoType):
@@ -340,37 +251,25 @@ def giveRealtimeStock(stockName, infoType):
 
 @app.route("/get_stocks/<stockName>", methods = ["GET"])
 def giveRealtimeStockAll(stockName):
-    global REALTIME_IN_USE
-    REALTIME_IN_USE = True
-    resp = dict()
-    try:
-        db.MUTEX.acquire()
-        resp = json.dumps(getStock(stockName, "all"))
-    finally:
-        db.MUTEX.release()
-    REALTIME_IN_USE = False
+    resp = json.dumps(getStock(stockName, "all"))
     return resp
 
 @app.route("/get_stocks", methods = ["GET"])
 def giveAllRealtimeData(stocksToGet = None):
     if stocksToGet == None:
         stocksToGet = db.STOCK_MAP.keys()
-    global REALTIME_IN_USE
+    conn = r.connect(
+        db = db.DB
+    )
     updateThread = threading.Thread(
         target = updateAllRealtime
     )
 
     stockData = dict()
-    REALTIME_IN_USE = True
-    db.MUTEX.acquire()
-    try:
-        for stockName in stocksToGet:
-            stockData[stockName] = r.table(db.CACHE_TABLE).get(
-                stockName
-            ).run(db.CONN)
-    finally:
-        db.MUTEX.release()
-    REALTIME_IN_USE = False
+    for stockName in stocksToGet:
+        stockData[stockName] = r.table(db.CACHE_TABLE).get(
+            stockName
+        ).run(conn)
 
     if not db.UPDATING_REALTIME:
         db.UPDATING_REALTIME = True
@@ -383,21 +282,17 @@ def giveAllHistoricalData(stocksToGet = None):
     if stocksToGet == None:
         stocksToGet = db.STOCK_MAP.keys()
 
-    global HISTORICAL_IN_USE
+    conn = r.connect(
+        db = db.DB
+    )
     updateThread = threading.Thread(
         target = updateAllHistorical
     )
 
-    HISTORICAL_IN_USE = True
-    db.MUTEX.acquire()
-    try:
-        historicalData = [
-            r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
-            for stockName in stocksToGet
-        ]
-    finally:
-        db.MUTEX.release()
-    HISTORICAL_IN_USE = False
+    historicalData = [
+        r.table(db.HISTORICAL_TABLE).get(stockName).run(conn)
+        for stockName in stocksToGet
+    ]
 
     if not db.UPDATING_HISTORICAL:
         db.UPDATING_HISTORICAL = True
@@ -407,22 +302,14 @@ def giveAllHistoricalData(stocksToGet = None):
 
 @app.route("/get_historical_stocks/<stockName>", methods = ["GET"])
 def giveHistoricalData(stockName):
-    global HISTORICAL_IN_USE
-    HISTORICAL_IN_USE = True
     now = datetime.datetime.fromtimestamp(getTime())
     fiveDaysAgo = datetime.datetime.fromtimestamp(
         getTime() - daysToSeconds(5)
     )
 
-    resp = dict()
-    try:
-        db.MUTEX.acquire()
-        resp = json.dumps(
-            getHistoricalData(stockName, fiveDaysAgo)
-        )
-    finally:
-        db.MUTEX.release()
-    HISTORICAL_IN_USE = False
+    resp = json.dumps(
+        getHistoricalData(stockName, fiveDaysAgo)
+    )
     return resp
 
 @app.route("/get_stock_direct/<stockName>/<infoType>", methods = ["GET"])
@@ -431,3 +318,5 @@ def getStockDirect(stockName, infoType):
     stock = yf.StockInfo(stockName)
     data = getattr(stock, infoType, None)()
     return json.dumps({infoType: data})
+
+
