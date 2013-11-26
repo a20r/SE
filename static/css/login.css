@@ -63,15 +63,28 @@ label {
   font-size: 8pt;
 }
 .btn-primary {
+  border-color: #1abc9c;
   background-color: #1abc9c;
+  text-transform: uppercase;
+  font-size: 10pt;
+  font-weight: bold;
+}
+.btn-primary:hover {
+  border-color: #1abc9c;
+  background-color: #1bdfb8;
+}
+.btn-info {
+  border-color: #9aa9a6;
+  background-color: #9aa9a6;
   text-transform: uppercase;
   font-size: 10pt;
   border-radius: 4px;
   font-weight: bold;
   height: 45px;
 }
-.btn-primary:hover {
-  background-color: #1bdfb8;
+.btn-info:hover {
+  border-color: #b9bdbc;
+  background-color: #b9bdbc;
   border-radius: 4px;
   height: 45px;
 }

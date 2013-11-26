@@ -120,6 +120,7 @@ def getStock(stockName, infoType):
         infoDict = stock.all()
         infoDict["index"] = stockName
         infoDict["timestamp"] = getTime()
+        infoDict["name"] = db.STOCK_MAP[stockName]
         r.table(db.CACHE_TABLE).insert(infoDict).run(db.CONN)
     else:
         elapsedTime = (
@@ -142,7 +143,6 @@ def getStock(stockName, infoType):
             infoDict = cachedData
 
     # del infoDict["timestamp"]
-    infoDict["name"] = db.STOCK_MAP[stockName]
 
     if infoType == "all":
         return infoDict

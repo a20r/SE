@@ -48,7 +48,7 @@ var area2 = d3.svg.area()
         .y0(height2)
         .y1(function(d) { return y2(d.Close); });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#chart").append("svg")
         .attr("width", width + margin.left + margin.right + 100)
         .attr("height", height + margin.top + margin.bottom);
 

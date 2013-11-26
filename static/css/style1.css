@@ -3,13 +3,13 @@ svg {
 }
 
 path {
-  fill: #3399FF;
+  fill: rgba(44,62,80,0.4);
 }
 
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: rgba(44,62,80,1);
   shape-rendering: crispEdges;
 }
 
@@ -26,9 +26,7 @@ path {
 }
 
 .focus rect {
-	fill: white;
-	stroke: black;
-	stroke-width: 1.5px;
+	fill: rgba(44,62,80,0.5);
 }
 
 .overlay {
@@ -37,6 +35,13 @@ path {
 }
 
 .focus circle {
-  fill: white;
-  stroke: red;
+  fill: rgba(44,62,80,1);
+}
+
+.area{
+  fill: none;
+}
+
+#clip>.rect{
+  width: 100%;
 }

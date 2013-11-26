@@ -6,13 +6,13 @@ var currency = "GBP";
 var csvFile = "data/ftse100.csv";
 
 //Set graph position
-var margin = {top: 10, right: 60, bottom: 100, left: 200};
-var width = 960 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
+var margin = {top: 0, right: 0, bottom: 80, left: 0};
+var width = 940 - margin.left - margin.right;
+var height = 300 - margin.top - margin.bottom;
 //dimensions for contect selector
 
-var margin2 = {top: 430, right: 60, bottom: 20, left: 200};
-var height2 = 500 - margin2.top - margin2.bottom;
+var margin2 = {top: 250, right: 0, bottom: 20, left: 0};
+var height2 = 300 - margin2.top - margin2.bottom;
 
 //read date into a date object
 var getDate = d3.time.format("%e/%m/%Y").parse;
@@ -50,7 +50,7 @@ var area2 = d3.svg.area()
         .y1(function(d) { return y2(d.close); });
 
 var svg = d3.select("#chart").append("svg")
-        .attr("width", width + margin.left + margin.right + 100)
+        .attr("width", '100%')
         .attr("height", height + margin.top + margin.bottom);
 
 svg.append("defs").append("clipPath")
@@ -106,12 +106,13 @@ d3.csv( csvFile, function(error, data) {
 		  
 	
 		//label y axis
-        svg.append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 206)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text(currency);              
+        // svg.append("text")
+        //   .attr("transform", "rotate(-90)")
+        //   .attr("y", 5)
+        //   .attr("dy", "10px")
+        //   .style("text-anchor", "end")
+        //   .style("font-size","10px")
+        //   .text(currency);              
 		
 		
         context.append("path")
@@ -135,25 +136,25 @@ d3.csv( csvFile, function(error, data) {
 			.style("display", "none");
 		
 		inter.append("circle")
-			.attr("r", 4.5);
+			.attr("r", 5);
 		
 		inter.append("rect")
 			.attr("x", 9)
 			// .attr("y", 9)
-			.attr("height", 30)
-			.attr("width", 100)
-			.attr("rx", 6)
-			.attr("ry", 6)
+			.attr("height", 55)
+			.attr("width", 110)
+			.attr("rx", 5)
+			.attr("ry", 5)
 		
 		var date = inter.append("text")
-				.attr("x", 12)
-				.attr("y", 10)
-				.attr("dy", ".35em");
+				.attr("x", 20)
+				.attr("y", 20)
+				.attr("dy", ".10px")
 		  
 		var price = inter.append("text")
-				.attr("x", 12)
-				.attr("y", 20)
-				.attr("dy", ".35em");		
+				.attr("x", 20)
+				.attr("y", 40)
+				.attr("dy", ".10px");
 		
 	focus.append("rect")
       .attr("class", "overlay")
