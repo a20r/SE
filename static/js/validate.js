@@ -32,13 +32,14 @@ function validateEmail(){
 // Register
 function sendForm(){
 	"use strict";
-	var username = document.getElementById("user").value;
-	var password = document.getElementById("password1").value;
+	var username = document.getElementById("username").value;
+	var password = document.getElementById("password").value;
 	var email = document.getElementById("email").value;
 	$.ajax({ 
 		type:"POST", url: "/register", 
 		data: { "username": username, "password": password, "email": email}, 
 		success: function(obj) { 
+			window.location.replace("/main_page.html");
 			if (obj.error === 0)
 				window.location.replace("/main_page.html");
 			else if (obj.error === 1){
