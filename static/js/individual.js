@@ -1,7 +1,9 @@
 
 $(document).ready(function() { 
-	//checkLogin();
+	checkFollowing();
+	checkLogin();
 	loadPage($.cookie("index"));
+	$("#buttonFollowStyle").click(follow);
 });
 
 function loadPage(index){
@@ -20,6 +22,26 @@ function loadPage(index){
 	});
 }
 
+function checkFollowing() {
+	var button = document.getElementById("buttonFollowStyle");
+	var currentStock = $.cookie("index");
+	console.log("The cookie is " + currentStock);
+	$.getJSON("/get_following", function (jsonObj) {
+		console.log("The following: " + jsonObj);
+		for (var index in jsonObj) {
+			if (jsonObj[index] == currentStock) {
+				button.className = "btn btn-lg btn-primary btn-block UnfollowButton";
+				$("#buttonFollowStyle").click(unfollow);
+				button.innerHTML = '<i class="fa fa-plus-circle"></i> UNFOLLOW';
+				return;
+			}
+		}
+		button.innerHTML = '<i class="fa fa-plus-circle"></i> FOLLOW';
+		$("#buttonFollowStyle").click(follow);
+		button.className = "btn btn-lg btn-primary btn-block FollowButton";
+	});
+}
+
 function follow() {
     $.ajax({
         url: "/follow",
@@ -29,21 +51,40 @@ function follow() {
         },
         success: function (obj) {
             console.log(obj);
+            checkFollowing();
+        }
+    });
+}
+
+function unfollow() {
+	$.ajax({
+        url: "/unfollow",
+        type: "POST",
+        data: {
+            stock_name: $.cookie("index")
+        },
+        success: function (obj) {
+            console.log(obj);
+            checkFollowing();
         }
     });
 }
 
 function checkLogin() {
 	var login = document.getElementById("logCond");
+	var button = document.getElementById("buttonFollow");
 	var cookie = document.cookie;
 	if (cookie.indexOf("stock_auth_token=") !== -1) {
 		var cookieValue = cookie.indexOf(cookie.indexOf("stock_auth_token="));
 		if (cookieValue !== -1) {
+			button.className = "";
 			login.innerHTML = '<a href="javascript:logout();">LOGOUT</a>'
 		} else {
+			button.className = "HiddenClass";
 			login.innerHTML = '<a href="/login.html">LOGIN</a>';
 		}
 	} else {
+		button.className = "HiddenClass";
 		login.innerHTML = '<a href="/login.html">LOGIN</a>';
 	}
 }
