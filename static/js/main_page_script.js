@@ -55,6 +55,8 @@ function loadRecommended() {
 				'</div>\r\n</div>\r\n';
 		}
 		recommended.innerHTML = html;
+		$("#loading").css("display", "none");
+		$("#recommended").css("display", "block");
 	});
 }
 
