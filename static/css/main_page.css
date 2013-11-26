@@ -238,3 +238,25 @@
 	width: 156px;
 	height: 48px;
 }
+
+.RecommendedPlaceholder {
+	width: 160px;
+	height: 160px;
+	border-radius: 160px;
+	background: rgba(44,62,80,0.2);
+	float: left;
+	margin: 0 15px;
+}
+
+.RecSymbol {
+	color: #2c3e50;
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif; font-weight: 300;
+	font-size: 46px;
+	line-height: 160px;
+	text-align: center;
+}
+
+.RecommendedPlaceholder:hover {
+	background: rgba(44,62,80,0.4);
+}

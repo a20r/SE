@@ -4,11 +4,32 @@ $(document).ready(function() {
 		fillData();
 		loadMainPage();
 		checkLogin();
+		loadRecommended();
 
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
 	}
 })
+
+function loadRecommended() {
+	var recommended = document.getElementById("recommended");
+	var html = '';
+		for (var item = 0; item < 5; item++) {
+		html += '<div class=\"RecommendedPlaceholder\">\r\n' +
+				'</div>\r\n';
+		}
+	recommended.innerHTML = html;
+	$.getJSON("/recommend", function (jsonObj) {
+		var recStock = jsonObj["stocks"];
+		var html = '';
+		for (var item in recStock) {
+		html += '<div class=\"RecommendedPlaceholder\">\r\n' +
+				'<div class=\"RecSymbol\">' + recStock[item] +
+				'</div>\r\n</div>\r\n';
+		}
+		recommended.innerHTML = html;
+	});
+}
 
 function checkLogin() {
 	var login = document.getElementById("logCond");
