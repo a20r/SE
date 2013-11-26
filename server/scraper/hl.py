@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import urllib2
 
 url = "http://www.hl.co.uk/shares/stock-market-summary/ftse-100/risers?g=1d"

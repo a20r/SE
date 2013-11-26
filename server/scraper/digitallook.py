@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import urllib2
 
 url = "http://www.digitallook.com/cgi-bin/dlmedia/security.cgi?csi=50058&action=brokerrecommendations&username=&ac"

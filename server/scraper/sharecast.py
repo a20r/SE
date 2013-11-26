@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import urllib2
 
 url = "http://sharecast.com/indices/ftse-100-ukx.html"

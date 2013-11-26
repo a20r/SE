@@ -19,6 +19,6 @@ def run(host, port):
         debug = True
     )
 
-    updateAllRealtime()
-    updateAllHistorical()
+    #updateAllRealtime()
+    #updateAllHistorical()
 

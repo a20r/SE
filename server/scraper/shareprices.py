@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import urllib2
 
 url = "http://shareprices.com/risers/ftse100"

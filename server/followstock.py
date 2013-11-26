@@ -2,8 +2,7 @@
 from flask import request, render_template, jsonify, make_response
 
 import rethinkdb as r
-import dbconfig as db
-from app import app
+from app import app, db
 import json
 
 @app.route("/follow", methods = ["POST"])
@@ -45,18 +44,6 @@ def followStock():
 
         resp.set_cookie(db.AUTH_COOKIE, "")
         return resp
-
-@app.route("/get_following", methods = ["GET"])
-def getFollowing():
-    userData = r.table(db.USER_TABLE).get_all(
-        request.cookies.get(db.AUTH_COOKIE),
-        index = db.USER_SECONDARY_KEY
-    )[0].run(db.CONN)
-    print userData
-    if userData:
-        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY])
-    else:
-        return json.dumps(list())
 
 @app.route("/unfollow", methods = ["POST"])
 def unfollow():
