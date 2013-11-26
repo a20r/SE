@@ -4,8 +4,8 @@ import shareprices
 import redmayne
 
 scrapers = [
-	digitallook.scrape,
+	#digitallook.scrape,
 	hl.scrape,
 	shareprices.scrape,
-	redmayne.scrape,
+	redmayne.scrape
 ]

@@ -9,6 +9,7 @@ import threading
 
 REALTIME_IN_USE = False
 HISTORICAL_IN_USE = False
+FOLLOWING_IN_USE = False
 
 def getTime(toConvert = None):
     if toConvert == None:
@@ -136,7 +137,7 @@ def getStock(stockName, infoType):
                 r.table(db.CACHE_TABLE).get(stockName).update(
                     infoDict
                 ).run(db.CONN)
-            except OverflowError, DecodeError:
+            except:
                 pass
         else:
             print "\n-- DB -- " + stockName + " == Using Cached Data ==\n"
@@ -151,7 +152,7 @@ def getStock(stockName, infoType):
 
 def updateAllRealtime():
     for stockName in db.STOCK_MAP.keys():
-        while REALTIME_IN_USE or HISTORICAL_IN_USE:
+        while REALTIME_IN_USE or HISTORICAL_IN_USE or FOLLOWING_IN_USE:
             pass
         try:
             db.MUTEX.acquire()
@@ -166,7 +167,7 @@ def updateAllHistorical():
     )
 
     for stockName in db.STOCK_MAP.keys():
-        while HISTORICAL_IN_USE or REALTIME_IN_USE:
+        while HISTORICAL_IN_USE or REALTIME_IN_USE or FOLLOWING_IN_USE:
             pass
         try:
             db.MUTEX.acquire()
@@ -175,6 +176,27 @@ def updateAllHistorical():
             print "uh oh"
         finally:
             db.MUTEX.release()
+
+@app.route("/get_following", methods = ["GET"])
+def getFollowing():
+    global FOLLOWING_IN_USE
+
+    FOLLOWING_IN_USE = True
+    try:
+        db.MUTEX.acquire()
+        userData = r.table(db.USER_TABLE).get_all(
+            request.cookies.get(db.AUTH_COOKIE),
+            index = db.USER_SECONDARY_KEY
+        )[0].run(db.CONN)
+    finally:
+        db.MUTEX.release()
+    FOLLOWING_IN_USE = False
+
+    print userData
+    if userData:
+        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY])
+    else:
+        return json.dumps(list())
 
 @app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
 def giveRealtimeStock(stockName, infoType):

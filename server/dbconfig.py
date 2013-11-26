@@ -18,7 +18,7 @@ USER_SECONDARY_KEY = "token"
 
 # Shouldn't really be here but this is where my global vars live
 # Shows the database update interval in seconds
-UPDATE_INTERVAL = 10 * 60
+UPDATE_INTERVAL = 1 * 60
 
 HISTORICAL_INTERVAL = 60 * 60 * 24
 

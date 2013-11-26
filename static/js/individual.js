@@ -1,3 +1,27 @@
+<<<<<<< HEAD
+$(document).ready(function() { 
+	loadPage($.cookie("index"));
+});
+
+function loadPage(index){
+	$.getJSON("/get_stocks/" + index, function (jsonObj){
+		console.log(jsonObj);
+		document.getElementById('name').innerHTML = "<strong>" + jsonObj["index"] + "</strong>";
+		document.getElementById('name').innerHTML = document.getElementById('name').innerHTML + " " +  jsonObj["name"];
+		document.getElementById('CurrentPrice').innerHTML = jsonObj["price"];
+		document.getElementById('HighestPrice').innerHTML = jsonObj["fifty_two_week_high"];
+		document.getElementById('LowestPrice').innerHTML = jsonObj["fifty_two_week_low"];
+		document.getElementById('Change').innerHTML = jsonObj["change"] + "%";
+		if (jsonObj["change"] < 0)
+			document.getElementById('CurrentPriceArrow').className = "fa fa-arrow-down ArrowDown";
+		else
+			document.getElementById('CurrentPriceArrow').className = "fa fa-arrow-up ArrowUp";
+	});
+}
+
+function follow(){
+	
+=======
 
 $(document).ready(function() {
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -26,4 +50,5 @@ function checkLogin() {
 function logout() {
 	document.cookie = 'stock_auth_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	window.location.replace("/main_page.html");
+>>>>>>> 5c46aa41291a6841efe447a0ec21085d2d2ac221
 }

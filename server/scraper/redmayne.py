@@ -18,6 +18,6 @@ def scrape():
             #remove dot from the end of string
             if index[-1] != '.':
                 indexes.append(index)
-            else: 
+            else:
                 indexes.append(index[:-1])
     return indexes
