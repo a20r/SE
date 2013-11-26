@@ -7,10 +7,6 @@ from app import app, db
 import datetime, time
 import threading
 
-REALTIME_IN_USE = False
-HISTORICAL_IN_USE = False
-FOLLOWING_IN_USE = False
-
 def getTime(toConvert = None):
     if toConvert == None:
         return time.mktime(
@@ -173,65 +169,6 @@ def updateAllHistorical():
             print "uh oh"
     db.UPDATING_HISTORICAL = False
 
-@app.route("/follow", methods = ["POST"])
-def followStock():
-    conn = r.connect(
-        db = db.DB
-    )
-    userData = r.table(db.USER_TABLE).get_all(
-        request.cookies.get(db.AUTH_COOKIE),
-        index = db.USER_SECONDARY_KEY
-    )[0].run(conn)
-
-    if userData:
-        stockName = request.form["stock_name"]
-        if not stockName in db.STOCK_MAP.keys():
-            return jsonify(
-                error = 1,
-                message = "Cannot follow an imaginary stock"
-            )
-
-        if not stockName in userData[db.STOCKS_FOLLOWING_KEY]:
-            userData[db.STOCKS_FOLLOWING_KEY].append(stockName)
-            r.table(db.USER_TABLE).get(userData["username"]).update(
-                userData
-            ).run(conn)
-
-            return jsonify(
-                error = 0,
-                message = "No error"
-            )
-        else:
-            return jsonify(
-                error = 1,
-                message = "User is already following that stock"
-            )
-    else:
-        resp = make_response(
-            jsonify(
-                error = 1,
-                message = "User with associated token does not exist"
-            )
-        )
-
-        resp.set_cookie(db.AUTH_COOKIE, "")
-        return resp
-
-@app.route("/get_following", methods = ["GET"])
-def getFollowing():
-    conn = r.connect(
-        db = db.DB
-    )
-    userData = r.table(db.USER_TABLE).get_all(
-        request.cookies.get(db.AUTH_COOKIE),
-        index = db.USER_SECONDARY_KEY
-    )[0].run(conn)
-    print userData
-    if userData:
-        return json.dumps(userData[db.STOCKS_FOLLOWING_KEY])
-    else:
-        return json.dumps(list())
-
 @app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
 def giveRealtimeStock(stockName, infoType):
     return json.dumps(getStock(stockName, infoType))
@@ -305,3 +242,5 @@ def getStockDirect(stockName, infoType):
     stock = yf.StockInfo(stockName)
     data = getattr(stock, infoType, None)()
     return json.dumps({infoType: data})
+
+
