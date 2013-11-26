@@ -212,7 +212,10 @@ def giveAllRealtimeData(stocksToGet = None):
     return json.dumps(stockData)
 
 @app.route("/get_historical_stocks", methods = ["GET"])
-def giveAllHistoricalData():
+def giveAllHistoricalData(stocksToGet = None):
+    if stocksToGet == None:
+        stocksToGet = db.STOCK_MAP.keys()
+
     global HISTORICAL_IN_USE
     updateThread = threading.Thread(
         target = updateAllHistorical
@@ -223,7 +226,7 @@ def giveAllHistoricalData():
     try:
         historicalData = [
             r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
-            for stockName in db.STOCK_MAP.keys()
+            for stockName in stocksToGet
         ]
     finally:
         db.MUTEX.release()

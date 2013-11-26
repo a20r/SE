@@ -10,6 +10,7 @@ from manageusers import *
 from financecache import *
 from pageserver import *
 from followstock import *
+from recommendation import *
 
 updateAllRealtime()
 updateAllHistorical()
