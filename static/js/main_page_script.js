@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
-  	
 		loadMainPage();
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
