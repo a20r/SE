@@ -132,23 +132,6 @@ function loadCurrentValues(data, start) {
 function loadMainPage() {
 	var stocksTable = document.getElementById("stocks");
 	var test = document.getElementById("test");
-	// var key = new XMLHttpRequest();
-	// key.open('GET', 'data/key.csv');
-	// key.onreadystatechange = function() {
-	// 	if (key.readyState != 4) {
-	// 		return;
-	// 	}
-	// 	var csv = key.responseText;
-	// 	var keyData = $.csv.toArrays(csv);
-	// 	var table = '';
-	// 	for (var row in keyData) {
-	// 		var name = keyData[row][0];
-	// 		var symbol = keyData[row][1];
-	// 		addRow(name, symbol, stocksTable);
-	// 	}
-
-	// };
-	// key.send();
 	$.getJSON("/get_historical_stocks", function (jsonObj) {
 		console.log(jsonObj);
 		for (var key in jsonObj) {
@@ -161,7 +144,7 @@ function loadMainPage() {
 					var name = jsonObj[key]["name"];
 					var change = history[0]["Close"] / history[1]["Close"] * 100 - 100;
 					change = Math.round(change * 100) / 100;
-					addRow(name, key, change, history[0]["Open"], 
+					addRow(name, jsonObj[key]["index"], change, history[0]["Open"], 
 						history[0]["High"], history[0]["Low"], history[0]["Close"],
 						history[0]["Volume"]);
 				}
