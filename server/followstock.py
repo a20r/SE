@@ -58,9 +58,6 @@ def getFollowing():
         userData = userDataList[0]
         return fc.giveAllRealtimeData(userData[db.STOCKS_FOLLOWING_KEY])
     else:
-        return jsonify(
-            error = 1,
-            message = "User not yet created"
-        )
+        return json.dumps(list())
 
 
