@@ -5,6 +5,7 @@ import yahoofin as yf
 import json
 from app import app, db
 import datetime, time
+import threading
 
 def getTime(toConvert = None):
     if toConvert == None:
@@ -28,6 +29,12 @@ def dateToString(dateToConvert):
         ]
     )
 
+def tryFloat(value):
+    try:
+        return float(value)
+    except:
+        return value
+
 def createHistoryDictList(histList):
     if histList[0][0][0] == "<":
         return [dict()]
@@ -36,7 +43,7 @@ def createHistoryDictList(histList):
         dict(
             (
                 histList[0][i],
-                histList[j][i]
+                tryFloat(histList[j][i])
             ) for i in range(len(histList[0]))
         ) for j in range(1, len(histList))
     ]
@@ -137,6 +144,22 @@ def getStock(stockName, infoType):
     else:
         return {infoType: infoDict[infoType]}
 
+def updateAllRealtime():
+    for stockName in db.STOCK_MAP.keys():
+        getStock(stockName, "all")
+
+def updateAllHistorical():
+    now = datetime.datetime.fromtimestamp(getTime())
+    fiveDaysAgo = datetime.datetime.fromtimestamp(
+        getTime() - daysToSeconds(5)
+    )
+
+    for stockName in db.STOCK_MAP.keys():
+        try:
+            getHistoricalData(stockName, fiveDaysAgo)
+        except IOError:
+            print "uh oh"
+
 @app.route("/get_stocks/<stockName>/<infoType>", methods = ["GET"])
 def giveRealtimeStock(stockName, infoType):
     return json.dumps(getStock(stockName, infoType))
@@ -147,30 +170,35 @@ def giveRealtimeStockAll(stockName):
 
 @app.route("/get_stocks", methods = ["GET"])
 def giveAllRealtimeData():
-    return json.dumps(
-        dict(
-            (
-                stockName,
-                getStock(stockName, "all")
-            ) for stockName in db.STOCK_MAP.keys()
-        )
+
+    updateThread = threading.Thread(
+        target = updateAllRealtime
     )
+
+    stockData = dict()
+    for stockName in db.STOCK_MAP.keys():
+        stockData[stockName] = r.table(db.CACHE_TABLE).get(
+            stockName
+        ).run(db.CONN)
+
+    updateThread.start()
+    return json.dumps(stockData)
 
 @app.route("/get_historical_stocks", methods = ["GET"])
 def giveAllHistoricalData():
-    now = datetime.datetime.fromtimestamp(getTime())
-    fiveDaysAgo = datetime.datetime.fromtimestamp(
-        getTime() - daysToSeconds(5)
+
+    updateThread = threading.Thread(
+        target = updateAllHistorical
     )
 
-    return json.dumps(
-        dict(
-            (
-                stockName,
-                getHistoricalData(stockName, fiveDaysAgo)
-            ) for stockName in db.STOCK_MAP.keys()
-        )
-    )
+    historicalData = [
+        r.table(db.HISTORICAL_TABLE).get(stockName).run(db.CONN)
+        for stockName in db.STOCK_MAP.keys()
+    ]
+
+    updateThread.start()
+
+    return json.dumps(historicalData)
 
 @app.route("/get_historical_stocks/<stockName>", methods = ["GET"])
 def giveHistoricalData(stockName):
