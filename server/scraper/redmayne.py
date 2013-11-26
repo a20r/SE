@@ -4,6 +4,8 @@ import urllib2
 url = "http://www.redmayne.co.uk/research/ftse100-risersfallers.htm"
 
 def scrape():
+    """Returns a list of stocks that are scraped 
+    from the url that has recommended (top risers) stocks"""
     content = urllib2.urlopen(url).read()
     soup = BeautifulSoup(content)
     table = soup.find_all("table", class_="mainrfdata")

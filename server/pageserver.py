@@ -3,8 +3,10 @@ from flask import request, redirect, url_for, abort, jsonify, render_template
 from flask import make_response, Response
 from app import app
 
+""" Directory for static files """
 STATIC_DIR = "static/"
 
+""" Mime type dictionary """
 MIME_DICT = {
     "js": "text/javascript",
     "css": "text/css",
@@ -15,9 +17,11 @@ MIME_DICT = {
 
 @app.route("/<filename>", methods = ["GET"])
 def serveHtmlPage(filename):
+    """ Serves the html page """
     return render_template(filename)
 
 @app.route("/<filetype>/<filename>", methods = ["GET"])
 def serveScript(filetype, filename):
+    """ Serves the script """
     with open(STATIC_DIR + filetype + "/" + filename) as f:
         return Response(f.read(), mimetype = MIME_DICT[filetype])
