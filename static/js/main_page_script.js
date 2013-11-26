@@ -32,7 +32,8 @@ function loadRecommended() {
 		var recStock = jsonObj["stocks"];
 		var html = '';
 		for (var item in recStock) {
-		html += '<div class=\"RecommendedPlaceholder\">\r\n' +
+		html += '<div class=\"RecommendedPlaceholder\"' +
+				' onclick=\"loadIndividual(\'' + recStock[item] + '\')\">\r\n' +
 				'<div class=\"RecSymbol\">' + recStock[item] +
 				'</div>\r\n</div>\r\n';
 		}
