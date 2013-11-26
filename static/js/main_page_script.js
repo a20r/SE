@@ -157,9 +157,9 @@ function loadCurrentValues(data, start) {
 	}
 	for (index = start; index < start + 12 && index < data.length; index++) {
 		if (index >= indexLastRow) {
-			html += '<div class=\"ItemPlaceholder BottomRowPlaceholder\">';
+			html += '<div onclick=\"loadIndividual(\'' + data[index][0] + '\')\" class=\"ItemPlaceholder BottomRowPlaceholder\">';
 		} else {
-			html += '<div class=\"ItemPlaceholder\">';
+			html += '<div onclick=\"loadIndividual(\'' + data[index][0] + '\')\" class=\"ItemPlaceholder\">';
 		}
 		if ((index + 1) % 4 == 0) {
 			html += '<div class=\"LastItemContainer\">\r\n';
@@ -182,6 +182,11 @@ function loadCurrentValues(data, start) {
 	}
 
 	currentValues.innerHTML = html;
+}
+
+function loadIndividual(index){
+	$.cookie("index", index);
+	window.location.href = "/individual.html";
 }
 
 function loadMainPage() {
@@ -209,7 +214,7 @@ function loadMainPage() {
 function addRow(name, symbol, change, open, high, low, close, volume) {
 	var table = document.getElementById("stocksBody");
 	var html = '';
-	html += '<tr>\r\n' +
+	html += '<tr onclick=\"loadIndividual(\'' + symbol + '\')\">\r\n' + 
 		'<td>' + name + '</td>\r\n' +
 		'<td>' + symbol + '</td>\r\n';
 	if (change < 0) {
