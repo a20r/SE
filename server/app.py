@@ -12,7 +12,7 @@ from pageserver import *
 from followstock import *
 from recommendation import *
 
-#updateAllRealtime()
+updateAllRealtime()
 updateAllHistorical()
 
 def run(host, port):
