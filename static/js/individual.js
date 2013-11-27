@@ -11,7 +11,6 @@ function checkFollowedButton() {
 	var button = document.getElementById("followedButton");
 	var stockFollowButton = document.getElementById("buttonFollow");
 	var loginCookie = $.cookie("stock_auth_token");
-	alert(loginCookie)
 	if (loginCookie == undefined || loginCookie.length <= 0) {
 		button.style.display = "none";
 		stockFollowButton.style.display = "none";
