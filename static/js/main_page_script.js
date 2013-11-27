@@ -1,11 +1,11 @@
 
 $(document).ready(function() {
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		checkFollowedButton();
 		fillData();
 		loadMainPage();
 		checkLogin();
 		loadRecommended();
-		checkFollowedButton();
 
 	} else {
 	  alert('The File APIs are not fully supported in this browser.');
@@ -66,6 +66,8 @@ function loadRecommended() {
 				'</div>\r\n</div>\r\n';
 		}
 		recommended.innerHTML = html;
+		$("#loading").css("display", "none");
+		$("#recommended").css("display", "block");
 	});
 }
 /**

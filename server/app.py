@@ -12,8 +12,8 @@ from pageserver import *
 from followstock import *
 from recommendation import *
 
-#updateAllRealtime()
-#updateAllHistorical()
+updateAllRealtime()
+updateAllHistorical()
 
 def run(host, port):
     app.run(host = host, port = int(port), debug = True)

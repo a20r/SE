@@ -17,7 +17,10 @@ MIME_DICT = {
 
 @app.route("/<filename>", methods = ["GET"])
 def serveHtmlPage(filename):
-    """ Serves the html page """
+    if filename == "favicon.ico":
+        with open(STATIC_DIR + "img/favicon.ico") as f:
+            return Response(f.read(), mimetype = "image/x-icon")
+
     return render_template(filename)
 
 @app.route("/<filetype>/<filename>", methods = ["GET"])

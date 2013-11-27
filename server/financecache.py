@@ -225,6 +225,18 @@ def updateAllRealtime():
 
     db.UPDATING_REALTIME = False
 
+def historicalDictToList(historicalData):
+    print historicalData
+    return [
+        historicalData["Date"],
+        historicalData["Open"],
+        historicalData["High"],
+        historicalData["Low"],
+        historicalData["Close"],
+        historicalData["Volume"],
+        historicalData["Adj Clos"]
+    ]
+
 def updateAllHistorical():
     """
     Updates historical data in the database
@@ -236,7 +248,19 @@ def updateAllHistorical():
     )
     for stockName in db.STOCK_MAP.keys():
         try:
-            getHistoricalData(stockName, fiveDaysAgo)
+            historicalData = getHistoricalData(stockName, fiveDaysAgo)
+            with open(
+                "static/data/" + stockName.lower() + ".csv",
+                "a"
+            ) as f:
+                try:
+                    f.write(",".join(
+                        str(d) for d in historicalDictToList(
+                            historicalData["history_list"][0]
+                        )
+                    ) + "\n")
+                except KeyError:
+                    pass
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
     db.UPDATING_HISTORICAL = False
