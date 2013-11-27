@@ -6,7 +6,11 @@ $(document).ready(function() {
 	$("#buttonFollowStyle").click(follow);
 });
 
-
+/**
+* Checks if button for followed stocks is needed.
+* If user is not logged in or does not have follwing
+* stocks, hide the button.
+*/
 function checkFollowedButton() {
 	var button = document.getElementById("buttonFollow");
 	var loginCookie = $.cookie("stock_auth_token");
@@ -27,6 +31,9 @@ function checkFollowedButton() {
 	}
 }
 
+/**
+* Loads the information about the stock using index -- symbol used for stock name
+*/
 function loadPage(index){
 	$.getJSON("/get_stocks/" + index, function (jsonObj){
 		console.log(jsonObj);
@@ -43,6 +50,9 @@ function loadPage(index){
 	});
 }
 
+/**
+* Chages how the following button looks
+*/
 function checkFollowing() {
 	var button = document.getElementById("buttonFollowStyle");
 	var currentStock = $.cookie("index");
@@ -63,6 +73,9 @@ function checkFollowing() {
 	});
 }
 
+/**
+* Sends server the stock the user wants to follow
+*/
 function follow() {
     $.ajax({
         url: "/follow",
@@ -77,6 +90,9 @@ function follow() {
     });
 }
 
+/**
+* Sends server the stock the user wants to unfollow
+*/
 function unfollow() {
 	$.ajax({
         url: "/unfollow",
@@ -91,6 +107,9 @@ function unfollow() {
     });
 }
 
+/**
+* Checks if user is logged in to the system.
+*/
 function checkLogin() {
 	var login = document.getElementById("logCond");
 	var cookie = $.cookie("stock_auth_token");
@@ -101,6 +120,9 @@ function checkLogin() {
 	}
 }
 
+/**
+* Logouts: remove cookie information, redirect user to the main page.
+*/
 function logout() {
 	document.cookie = 'stock_auth_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	window.location.replace("/main_page.html");

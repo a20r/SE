@@ -11,18 +11,28 @@ $(document).ready(function() {
 	}
 })
 
+// interval for how often page is updated in seconds
 var updateTime = 10 * 1000
+// function call to update the page
 var updateInterval = setInterval(fillData, updateTime)
+// current page the user is on in the "Current Values" in the main page
 var currentPage = 0;
+// the data that is used to show data for user (when using filter, some values are hidden)
 var currentDataInUse;
+// data about stocks received from server
 var allData;
 
-
+/**
+* Logouts: remove cookie information, redirect user to the main page.
+*/
 function logout() {
 	document.cookie = 'stock_auth_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	window.location.replace("/main_page.html");
 }
 
+/**
+* Checks if user is logged in to the system.
+*/
 function checkLogin() {
 	var login = document.getElementById("logCond");
 	var cookie = $.cookie("stock_auth_token");
@@ -33,6 +43,9 @@ function checkLogin() {
 	}
 }
 
+/**
+* Hides the filter in the main html page.
+*/
 function hideFilter() {
 	var filter = document.getElementById("filterContainer");
 	if (filter.className != "HiddenClass") {
@@ -42,6 +55,10 @@ function hideFilter() {
 	}
 }
 
+/**
+* Gets stocks data from server, then invokes functions to load the whole 
+* page with data received from server
+*/
 function fillData() {
 	allData = new Array();
 	$.getJSON("/get_following", function (followList) {
@@ -78,6 +95,10 @@ function fillData() {
 	});
 }
 
+/**
+* Creates circles bellow Current Values container to allow
+* clicking on them.
+*/
 function loadPaging(dataLength) {
 	var paging = document.getElementById("paging");
 	var width = Math.ceil(dataLength / 12) * 16;
@@ -95,6 +116,10 @@ function loadPaging(dataLength) {
 	paging.innerHTML = html;
 }
 
+/**
+* Loads selected page (circles bellow) for Current Values container.
+* Allows to navigate between Current Values.
+*/
 function pageOnClick(pageClicked) {
 	var previousPage = document.getElementById("page" + currentPage);
 	previousPage.className = "Page";
@@ -104,17 +129,13 @@ function pageOnClick(pageClicked) {
 	currentPage = pageClicked;
 }
 
+/**
+* Filters Current Values using "BY NAME OR SYMBOL" filter.
+*/
 function filterCurrent(value) {
 	currentDataInUse = new Array();
 	var index = 0;
 	for (var row in allData) {
-		// if (allData[row][0].substring(0, value.length).toLowerCase() 
-		// 	== value.toLowerCase() ||
-		// 	allData[row][3].substring(0, value.length).toLowerCase()
-		// 	== value.toLowerCase()) {
-		// 	currentDataInUse[index] = allData[row];
-		// 	index++;
-		// }
 		var symbol = allData[row][0].toLowerCase();
 		var name = allData[row][3].toLowerCase();
 		value = value.toLowerCase();
@@ -128,6 +149,9 @@ function filterCurrent(value) {
 	loadPaging(index);
 }
 
+/**
+* Loads values in the Current Values container.
+*/
 function loadCurrentValues(data, start) {
 	var currentValues = document.getElementById("currentValues");
 	var index;
@@ -172,6 +196,9 @@ function loadCurrentValues(data, start) {
 	currentValues.innerHTML = html;
 }
 
+/**
+* Create the table for all stocks and show details using only last day's information.
+*/
 function loadMainPage() {
 	var stocksTable = document.getElementById("stocks");
 	$.getJSON("/get_following", function (followList) {
@@ -205,6 +232,11 @@ function loadMainPage() {
     });
 }
 
+/**
+* Checks if button for followed stocks is needed.
+* If user is not logged in or does not have follwing
+* stocks, hide the button.
+*/
 function checkFollowedButton() {
 	var button = document.getElementById("followedButton");
 	var loginCookie = $.cookie("stock_auth_token");
@@ -221,11 +253,17 @@ function checkFollowedButton() {
 	});
 }
 
+/**
+* Redirects to individual stock page. index - symbol of the stock
+*/
 function loadIndividual(index){
 	$.cookie("index", index);
 	window.location.href = "/individual.html";
 }
 
+/**
+* Add new row with information to the table
+*/
 function addRow(name, symbol, change, open, high, low, close, volume) {
 	var table = document.getElementById("stocksBody");
 	var html = '';
@@ -250,63 +288,9 @@ function addRow(name, symbol, change, open, high, low, close, volume) {
 	table.innerHTML += html;
 }
 
-function onClick(symbol) {
-	var stocksTable = document.getElementById("mainContent");
-	stocksTable.className = "HiddenClass";
-	var individualStock = document.getElementById("individualStock");
-	individualStock.className = "";
-	var table = document.getElementById("singleStockTable");
-	initialiseTable(table);
-	var back = document.getElementById("back");
-	back.className = "";
-	var reader = new XMLHttpRequest();
-	reader.open('GET', 'data/' + symbol + '.csv');
-	reader.onreadystatechange = function() {
-		if (reader.readyState != 4) {
-			return;
-		}
-		var csv = reader.responseText;
-		var data = $.csv.toArrays(csv);
-		var html = '';
-		var index = 0;
-		for(var row in data) {
-			if (index > 0) {
-				html += '<tr>\r\n';
-				var i;
-				for (var i = 0; i < 6; i++) {
-					html += '<td>' + data[row][i] + '</td>\r\n';
-				}
-				html += '</tr>\r\n';
-			}
-			index++;
-		}
-		table.innerHTML += html;
-	}
-	reader.send();
-}
-
-function initialiseTable(table) {
-	table.innerHTML = '<tr>\r\n' + 
-				'<th>Trading Day</th>\r\n' + 
-				'<th>Opening Price</th>\r\n' + 
-				'<th>Trading Day\'s High</th>\r\n' + 
-				'<th>Trading Day\'s Low</th>\r\n' + 
-				'<th>Closing Price</th>\r\n' + 
-				'<th>Volume</th>\r\n' +
-				'</tr>';
-}
-
-function goBack() {
-	var back = document.getElementById("back");
-	back.className = "HiddenClass";
-	var individualStock = document.getElementById('individualStock');
-	individualStock.className = "HiddenClass";
-	var mainContent = document.getElementById("mainContent");
-	mainContent.className = "";
-}
-
-
-
+/**
+* Filter the table "BY NAME OR SYMBOL"
+*/
 function show(value){
 	var lowercaseValue = value.toLowerCase();
 	var stocksTable = document.getElementById("stocks");
@@ -319,39 +303,7 @@ function show(value){
 	filterCurrent(value);
 }
 
-var startDate;
-var endDate;
-
-function showByDate(element){	
-	if (element.id == "startDate")
-		startDate = new Date(element.value);
-	else 
-		endDate = new Date(element.value);
-	// hide rows that do not match selected date
-	if (startDate != null && endDate != null){
-		var rows = document.getElementById('singleStockTable').rows;
-		for (var row = 0; row < rows.length; row++){
-			var day = new Date(rows[row].cells[0].innerHTML);
-			if (day < startDate || day > endDate)
-				rows[row].className = "HiddenClass";
-			else rows[row].className = "";
-		}
-	// remove values
-	document.getElementById('startDate').value = "";
-	startDate = null;
-	document.getElementById('endDate').value = "";
-	endDate = null;	
-	}
-}
-
-$(function() {
-	$( "#startDate" ).datepicker({ dateFormat: 'yy-mm-dd' });
-});
-
-$(function() {
-	$( "#endDate" ).datepicker({ dateFormat: 'yy-mm-dd' });
-});
-
+// Slider to filter by the price
 $(function() {
     $( "#slider-range" ).slider({
       range: true,
@@ -367,7 +319,10 @@ $(function() {
       " - £" + $( "#slider-range" ).slider( "values", 1 ) );
 	  filter($( "#slider-range" ).slider( "values", 0 ), $( "#slider-range" ).slider( "values", 1 ));
   });
-  
+
+/**
+* Filter table using slider on closing prices
+*/
 function filter(low, high){
 	var rows = document.getElementById('stocks').rows;
 	for (var row = 0; row < rows.length; row++){

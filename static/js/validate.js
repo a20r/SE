@@ -9,16 +9,22 @@ else{
   	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 }
 
+/**
+* Checks if both passwords are the same. (Used for registration)
+*/
 function validatePassword(){
 	"use strict";
-	var element1 = document.getElementById("password1");
-	var element2 = document.getElementById("password2");
+	var element1 = document.getElementById("password");
+	var element2 = document.getElementById("password1");
 	if (element1.value !== element2.value)
 		element2.setCustomValidity("Passwords do not match");
 	else 
 		element2.setCustomValidity("");
 }
 
+/**
+* Validates email using regex
+*/
 function validateEmail(){
 	"use strict";
 	var element = document.getElementById("email");
@@ -29,7 +35,9 @@ function validateEmail(){
 		element.setCustomValidity("");
 }
 
-// Register
+/**
+* Submit user details to server
+*/
 function sendForm(){
 	"use strict";
 	var username = document.getElementById("username").value;
@@ -49,7 +57,11 @@ function sendForm(){
 		} });
 }
 
-//Login
+/** 
+* Login.
+* Sends entered details to server, if details are correct,
+* redirects to the main page, otherwise, shows error message.
+*/
 function login(){
 	"use strict";
 	var password = document.getElementById("password").value;
@@ -67,7 +79,7 @@ function login(){
 		} });
 }
 
-// change default submit for registration form
+// changes default submit for registration form
 $(document).ready(function(){
     $( "#form" ).submit(function( event ) {
 		event.preventDefault();

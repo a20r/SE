@@ -21,11 +21,11 @@
         <label for="username">Username</label>
         <input class="form-control" type="text" id="username" required autofocus>
         <label for="email">E-mail </label>
-        <input class="form-control" type="email" id="email" required>
+        <input class="form-control" type="email" id="email" onchange="validateEmail()" required>
         <label for="password">Password</label>
-        <input class="form-control" type="password" id="password" required>
+        <input class="form-control" type="password" id="password" onchange="validatePassword()" required>
         <label for="password1">Retype Password</label>
-        <input class="form-control" type="password" id="password1" required>
+        <input class="form-control" type="password" id="password1" onchange="validatePassword()" required>
 
         <!-- <div class="row" >
           <div class="col-xs-12">

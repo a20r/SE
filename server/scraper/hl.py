@@ -11,6 +11,7 @@ def scrape():
     content = con.read()
     soup = BeautifulSoup(content)
     table = soup.find_all("table", class_="darker-headed-table")
+    print table[0]
     rows = table[0].find_all('tr')
     indexes = []
     for row in rows:
